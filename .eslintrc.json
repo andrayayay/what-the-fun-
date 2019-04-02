@@ -10,6 +10,7 @@
       ],
     "rules": {
         "no-duplicate-case":"error",
+        "function-paren-newline": ["never"],
         "no-empty":"error",
         "no-extra-semi":"error",
         "no-func-assign": "error",
