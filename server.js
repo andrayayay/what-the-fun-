@@ -47,6 +47,7 @@ app.get("/events", (req, res) => {
       latitude,
       longitude,
       req.query.category,
+      req.query.offset,
       req.query.range,
       (error, data) => {
         if (error) return res.send({ error });
@@ -71,11 +72,11 @@ if (process.env.NODE_ENV === "test") {
 // Starting the server, syncing our models ------------------------------------/
 db.sequelize.sync(syncOptions).then(function() {
   app.listen(PORT, function() {
-    console.log(
-      "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
-      PORT,
-      PORT
-    );
+    // console.log(
+    //   "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
+    //   PORT,
+    //   PORT
+    // );
   });
 });
 

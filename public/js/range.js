@@ -169,7 +169,7 @@
                 }
               }
             };
-            var rangeMouseup = function(muEvent) {
+            var rangeMouseup = function() {
               if (isTouch) {
                 $(document).off("touchmove", rangeMousemove);
                 $(document).off("touchend", rangeMouseup);
@@ -212,7 +212,7 @@
           // to detect when root invisible element is behing shown in order to initialize the thumb correctly
           // when position and offets are available (https://stackoverflow.com/a/5974377)
 
-          var observer = new MutationObserver(function(mutationList) {
+          var observer = new MutationObserver(function() {
             if ($(elem).is(":visible")) {
               observer.disconnect(); // Avoid infinite recursion because « module.setValuePosition » will trigger this observer
               module.setValuePosition(settings.start);
@@ -253,6 +253,6 @@
     start: 0,
     input: false,
 
-    onChange: function(value) {}
+    onChange: function() {}
   };
 })(jQuery, window, document);

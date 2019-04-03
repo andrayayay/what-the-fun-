@@ -5,6 +5,8 @@
 body {
   margin: auto;
   padding: auto;
+  background-color: #00a395;
+  background-image: url("https://www.transparenttextures.com/patterns/diagmonds-light.png");
 }
 
 .container {

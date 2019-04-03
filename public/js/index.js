@@ -100,6 +100,31 @@ $exampleList.on("click", ".delete", handleDeleteBtnClick);
 
 // END OF BOILER PLATE
 $(document).ready(function() {
+  const appendToTable = url => {
+    fetch(url).then(response => {
+      response.json().then(data => {
+        if (data.error) throw data.error;
+        $("#loader").hide();
+        data.forEach(el => {
+          $("#tableBody").append(`
+        <tr>
+        <td class="collapsing">
+          <div class="ui fitted toggle checkbox">
+            <input type="checkbox" data-id=${el.id}> <label></label>
+          </div>
+        </td>
+        <td>${el.title}</td>
+        <td>${el.date}</td>
+        <td><a href="https://www.google.com/maps/place/?q=place_id:${
+          el.place_id
+        }" target="_blank">${el.strAddr}</a></td>
+        <td>${el.start}</td>
+      </tr>`);
+        });
+      });
+    });
+  };
+
   // Initializing the Semantic UI Dropdown
   $(".ui.dropdown").dropdown();
   $("#loader").hide();
@@ -111,6 +136,12 @@ $(document).ready(function() {
     input: "#rangeInput"
   });
 
+  var offset = 0;
+  var url = "";
+  var range = "";
+  var location = "";
+  var category = "";
+
   if (window.location.href.includes("favorites")) {
     $("#favoritesPage").attr("class", "item active");
   } else if (window.location.href.includes("friends")) {
@@ -120,37 +151,24 @@ $(document).ready(function() {
   $("#header")
     .form()
     .submit(e => {
+      offset = 0;
       e.preventDefault();
       $("#tableBody").html("");
       $("#loader").show();
-      var range = $("#rangeInput").val();
-      var location = $("#loc").val();
-      var category = $("#etype")
+      range = $("#rangeInput").val();
+      location = $("#loc").val();
+      category = $("#etype")
         .val()
         .join(",");
-      var url = `/events?address=${location}&category=${category}&range=${range}`;
-
-      fetch(url).then(response => {
-        response.json().then(data => {
-          if (data.error) throw data.error;
-          $("#loader").hide();
-          data.forEach(el => {
-            $("#tableBody").append(`
-          <tr>
-          <td class="collapsing">
-            <div class="ui fitted toggle checkbox">
-              <input type="checkbox" data-id=${el.id}> <label></label>
-            </div>
-          </td>
-          <td>${el.title}</td>
-          <td>${el.date}</td>
-          <td><a href="https://www.google.com/maps/place/?q=place_id:${
-            el.place_id
-          }" target="_blank">${el.strAddr}</a></td>
-          <td>${el.start}</td>
-        </tr>`);
-          });
-        });
-      });
+      url = `/events?address=${location}&category=${category}&range=${range}&limit=10&offset=${offset}`;
+      appendToTable(url, offset);
+      $("#showMore").show();
     });
+
+  $("#showMore").on("click", () => {
+    offset += 10;
+    url = url = `/events?address=${location}&category=${category}&range=${range}&limit=10&offset=${offset}`;
+    $("#loader").show();
+    appendToTable(url);
+  });
 });
