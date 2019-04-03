@@ -103,7 +103,11 @@ $(document).ready(function() {
   const appendToTable = url => {
     fetch(url).then(response => {
       response.json().then(data => {
-        if (data.error) throw data.error;
+        if (data.error) {
+          $("#tableBody").append(`
+          <tr>${data.error}</tr>`);
+          throw data.error;
+        }
         $("#loader").hide();
         data.forEach(el => {
           $("#tableBody").append(`
@@ -136,11 +140,22 @@ $(document).ready(function() {
     input: "#rangeInput"
   });
 
+  $("#miles").on("click", () => {
+    $("#miles").attr("class", "ui teal label");
+    $("#kilometers").attr("class", "ui transparent label");
+  });
+
+  $("#kilometers").on("click", () => {
+    $("#kilometers").attr("class", "ui teal label");
+    $("#miles").attr("class", "ui transparent label");
+  });
+
   var offset = 0;
   var url = "";
   var range = "";
   var location = "";
   var category = "";
+  var unit = "mi";
 
   if (window.location.href.includes("favorites")) {
     $("#favoritesPage").attr("class", "item active");
@@ -160,7 +175,10 @@ $(document).ready(function() {
       category = $("#etype")
         .val()
         .join(",");
-      url = `/events?address=${location}&category=${category}&range=${range}&limit=10&offset=${offset}`;
+      if ($("#miles").attr("class", "ui transparent label")) {
+        unit = "km";
+      }
+      url = `/events?address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}`;
       appendToTable(url, offset);
       $("#showMore").show();
     });

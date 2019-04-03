@@ -247,7 +247,7 @@
     name: "Range",
     namespace: "range",
 
-    min: 0,
+    min: 1,
     max: false,
     step: 1,
     start: 0,

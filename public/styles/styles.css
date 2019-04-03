@@ -31,3 +31,8 @@ body {
 #home {
   margin-top: 8px;
 }
+
+#miles:hover,
+#kilometers:hover {
+  cursor: pointer;
+}

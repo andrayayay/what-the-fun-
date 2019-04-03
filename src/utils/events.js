@@ -5,7 +5,8 @@ const config = require("./config");
 
 const events = (lat, lon, cat, offset, range, callback) => {
   const AuthStr = "Bearer ".concat(config.AUTH.id);
-  const url = `https://api.predicthq.com/v1/events?category=${cat}&offset=${offset}&within=${range}mi@${lat},${lon}`;
+  const url = `https://api.predicthq.com/v1/events?category=${cat}&offset=${offset}&within=${range}@${lat},${lon}`;
+  console.log(url);
   var callbackData = [];
 
   axios
@@ -14,11 +15,22 @@ const events = (lat, lon, cat, offset, range, callback) => {
     })
     .then(response => {
       callbackData = response.data.results;
-      reverseGeolocate(callbackData).then(() => {
-        setTimeout(() => {
-          callback(undefined, callbackData);
-        }, 2000);
-      });
+      if (callbackData.length === 0) {
+        var msg = "No results found!";
+        callbackData[0] = {
+          title: msg,
+          date: msg,
+          strAddr: msg,
+          start: msg
+        };
+        callback(undefined, callbackData);
+      } else {
+        reverseGeolocate(callbackData).then(() => {
+          setTimeout(() => {
+            callback(undefined, callbackData);
+          }, 2000);
+        });
+      }
     })
     .catch(error => {
       throw error;
