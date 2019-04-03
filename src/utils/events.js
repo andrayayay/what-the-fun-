@@ -6,7 +6,6 @@ const config = require("./config");
 const events = (lat, lon, cat, offset, range, callback) => {
   const AuthStr = "Bearer ".concat(config.AUTH.id);
   const url = `https://api.predicthq.com/v1/events?category=${cat}&offset=${offset}&within=${range}@${lat},${lon}`;
-  console.log(url);
   var callbackData = [];
 
   axios

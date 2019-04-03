@@ -42,7 +42,6 @@ app.get("/friends", (req, res) => {
 });
 
 app.get("/events", (req, res) => {
-  console.log(req.query.unit);
   geocode.geocode(req.query.address, (error, { latitude, longitude }) => {
     events(
       latitude,

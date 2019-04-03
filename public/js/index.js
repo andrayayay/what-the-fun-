@@ -185,7 +185,7 @@ $(document).ready(function() {
 
   $("#showMore").on("click", () => {
     offset += 10;
-    url = url = `/events?address=${location}&category=${category}&range=${range}&limit=10&offset=${offset}`;
+    url = url = `/events?address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}`;
     $("#loader").show();
     appendToTable(url);
   });
