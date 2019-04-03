@@ -15,10 +15,7 @@
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
     "moment": "^2.24.0",
-    "mysql2": "^1.6.4",
-    "request": "^2.88.0",
-    "reverse-geocoding-google": "^1.1.0",
-    "sequelize": "^4.41.2"
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
