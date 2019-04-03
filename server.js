@@ -1,6 +1,8 @@
 require("dotenv").config();
 var express = require("express");
 var exphbs = require("express-handlebars");
+const geocode = require("./src/utils/geocode");
+const events = require("./src/utils/events");
 
 var db = require("./models");
 
@@ -20,6 +22,39 @@ app.engine(
   })
 );
 app.set("view engine", "handlebars");
+
+app.get("", (req, res) => {
+  res.render("index", {
+    title: "What the Fun?!"
+  });
+});
+
+app.get("/favorites", (req, res) => {
+  res.render("favorites", {
+    title: "Favorites"
+  });
+});
+
+app.get("/friends", (req, res) => {
+  res.render("friends", {
+    title: "Friends"
+  });
+});
+
+app.get("/events", (req, res) => {
+  geocode.geocode(req.query.address, (error, { latitude, longitude }) => {
+    events(
+      latitude,
+      longitude,
+      req.query.category,
+      req.query.range,
+      (error, data) => {
+        if (error) return res.send({ error });
+        res.send(data);
+      }
+    );
+  });
+});
 
 // Routes
 require("./routes/apiRoutes")(app);

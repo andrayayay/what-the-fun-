@@ -97,3 +97,60 @@ var handleDeleteBtnClick = function() {
 // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
 $exampleList.on("click", ".delete", handleDeleteBtnClick);
+
+// END OF BOILER PLATE
+$(document).ready(function() {
+  // Initializing the Semantic UI Dropdown
+  $(".ui.dropdown").dropdown();
+  $("#loader").hide();
+  $("#range").range({
+    min: 0,
+    max: 100,
+    start: 20,
+    step: 1,
+    input: "#rangeInput"
+  });
+
+  if (window.location.href.includes("favorites")) {
+    $("#favoritesPage").attr("class", "item active");
+  } else if (window.location.href.includes("friends")) {
+    $("#friendsPage").attr("class", "item active");
+  } else $("#homePage").attr("class", "item active");
+
+  $("#header")
+    .form()
+    .submit(e => {
+      e.preventDefault();
+      $("#tableBody").html("");
+      $("#loader").show();
+      var range = $("#rangeInput").val();
+      var location = $("#loc").val();
+      var category = $("#etype")
+        .val()
+        .join(",");
+      var url = `/events?address=${location}&category=${category}&range=${range}`;
+
+      fetch(url).then(response => {
+        response.json().then(data => {
+          if (data.error) throw data.error;
+          $("#loader").hide();
+          data.forEach(el => {
+            $("#tableBody").append(`
+          <tr>
+          <td class="collapsing">
+            <div class="ui fitted toggle checkbox">
+              <input type="checkbox" data-id=${el.id}> <label></label>
+            </div>
+          </td>
+          <td>${el.title}</td>
+          <td>${el.date}</td>
+          <td><a href="https://www.google.com/maps/place/?q=place_id:${
+            el.place_id
+          }" target="_blank">${el.strAddr}</a></td>
+          <td>${el.start}</td>
+        </tr>`);
+          });
+        });
+      });
+    });
+});

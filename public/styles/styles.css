@@ -1,3 +1,31 @@
 .list-group-item {
   line-height: 2.5;
 }
+
+body {
+  margin: auto;
+  padding: auto;
+}
+
+.container {
+  margin: auto;
+  padding: auto;
+}
+
+#rangeDisplay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5px;
+}
+
+#rangeInput {
+  padding-left: 8px;
+  align-content: center;
+}
+
+#home {
+  margin-top: 8px;
+}

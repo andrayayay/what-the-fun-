@@ -1,33 +1,83 @@
-<div id="home">
-  <div class="container">
-    <div class="row">
-      <div class="col-8 offset-2">
-        <h1>{{msg}}</h1>
-        <h2>This is our Home Page!</h2>
-        <form class="clearfix mb-4" action="POST">
-          <div class="form-group">
-            <label for="example-text">Example Text</label>
-            <input type="text" id="example-text" class="form-control" aria-describedby="example-text" placeholder="Enter Example Text">
+<div class="ui container" id="home">
+  <div class="ui segment">
+    <div class="ui form" id="header">
+      <div class="two fields">
+        {{!-- Category Dropdown --}}
+        <div class="field">
+          <div class="ui sub header">Event Type</div>
+          <select multiple="" name="events" id="etype" class="ui fluid normal dropdown">
+            <option value="">Type</option>
+            <option value="concerts">Concerts</option>
+            <option value="festivals">Festivals</option>
+            <option value="performing-arts">Performing Arts</option>
+            <option value="sports">Sports</option>
+            <option value="community">Community Events</option>
+            <option value="conferences">Conferences</option>
+            <option value="expos">Expos</option>
+          </select>
+        </div>
+        {{!-- Category Dropdown --}}
+
+        {{!-- Search Bar --}}
+        <div class="field">
+          <div class="ui sub header">Location</div>
+          <div class="ui fluid input focus">
+            <input type="text" placeholder="Search..." id="loc">
           </div>
-          <div class="form-group">
-            <label for="example-description">Example Description</label>
-            <textarea class="form-control" id="example-description" aria-describedby="example-description" placeholder="Enter Example Description"></textarea>
-          </div>
-          <button id="submit" class="btn btn-primary float-right">Submit</button>
-        </form>
-        <h3>Examples:</h3>
-        <ul id="example-list" class="list-group">
-          {{#each examples}}
-          <li data-id="{{this.id}}" class="list-group-item">
-            <a href="example/{{this.id}}">{{this.text}}</a>
-            <button class="btn btn-danger float-right delete">ｘ</button>
-          </li>
-          {{/each}}
-        </ul>
+        </div>
+        {{!-- Search Bar --}}
+
       </div>
+    </div>
+    {{!-- End of Form --}}
+
+    {{!-- Range input slider --}}
+    <div class="ui row">
+      <div class="ui sub header">Search Radius</div>
+      <div class="ui teal range" id="range"></div>
+      <div class="ui transparent fluid input">
+        <input type="text" id="rangeInput">
+        <div class="ui transparent basic label">
+          mi
+        </div>
+      </div>
+    </div>
+    {{!-- Range input slider --}}
+
+
+  </div>
+  <div class="ui segment">
+    <div class="ui grid" id="main-content">
+      <table class="ui compact celled definition teal table">
+        <thead class="full-width">
+          <tr>
+            <th>Favorite</th>
+            <th>Event</th>
+            <th>Event Date</th>
+            <th>Address</th>
+            <th>Start Time</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <div class="ui active inverted dimmer" id="loader">
+            <div class="ui text loader">Loading</div>
+          </div>
+          <p></p>
+        </tbody>
+        <tfoot class="full-width">
+          <tr>
+            <th></th>
+            <th colspan="4">
+              <div class="ui right floated small primary labeled icon button">
+                <i class="user icon"></i> Share Events
+              </div>
+              <div class="ui small button">
+                Add Favorites
+              </div>
+            </th>
+          </tr>
+        </tfoot>
+      </table>
     </div>
   </div>
 </div>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/js/index.js"></script>
