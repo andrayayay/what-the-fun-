@@ -1,6 +1,10 @@
 ## Project title
 What the Fun (WTF)
 
+<b>Click here to view project:</b>
+- [WTF](https://andrayayay.github.io/project2/)
+
+
 ## Description 
 Our application will allow users to select a location and an event type (concerts, festivals, performing arts, sports, community events) that will then search for events near them. Users will also be able to add an event to their favorites and share events to facebook and other users. Our login feature will be created with OAuth and we will store users and events in MySQL Database.
 
