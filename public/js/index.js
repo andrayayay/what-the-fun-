@@ -97,3 +97,96 @@ var handleDeleteBtnClick = function() {
 // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
 $exampleList.on("click", ".delete", handleDeleteBtnClick);
+
+// END OF BOILER PLATE
+$(document).ready(function() {
+  const appendToTable = url => {
+    fetch(url).then(response => {
+      response.json().then(data => {
+        if (data.error) {
+          $("#tableBody").append(`
+          <tr>${data.error}</tr>`);
+          throw data.error;
+        }
+        $("#loader").hide();
+        data.forEach(el => {
+          $("#tableBody").append(`
+        <tr>
+        <td class="collapsing">
+          <div class="ui fitted toggle checkbox">
+            <input type="checkbox" data-id=${el.id}> <label></label>
+          </div>
+        </td>
+        <td>${el.title}</td>
+        <td>${el.date}</td>
+        <td><a href="https://www.google.com/maps/place/?q=place_id:${
+          el.place_id
+        }" target="_blank">${el.strAddr}</a></td>
+        <td>${el.start}</td>
+      </tr>`);
+        });
+      });
+    });
+  };
+
+  // Initializing the Semantic UI Dropdown
+  $(".ui.dropdown").dropdown();
+  $("#loader").hide();
+  $("#range").range({
+    min: 1,
+    max: 100,
+    start: 20,
+    step: 1,
+    input: "#rangeInput"
+  });
+
+  $("#miles").on("click", () => {
+    $("#miles").attr("class", "ui teal label");
+    $("#kilometers").attr("class", "ui transparent label");
+  });
+
+  $("#kilometers").on("click", () => {
+    $("#kilometers").attr("class", "ui teal label");
+    $("#miles").attr("class", "ui transparent label");
+  });
+
+  var offset = 0;
+  var url = "";
+  var range = "";
+  var location = "";
+  var category = "";
+  var unit = "mi";
+
+  if (window.location.href.includes("favorites")) {
+    $("#favoritesPage").attr("class", "item active");
+  } else if (window.location.href.includes("friends")) {
+    $("#friendsPage").attr("class", "item active");
+  } else $("#homePage").attr("class", "item active");
+
+  $("#header")
+    .form()
+    .submit(e => {
+      offset = 0;
+      e.preventDefault();
+      $("#tableBody").html("");
+      $("#loader").show();
+      range = $("#rangeInput").val();
+      location = $("#loc").val();
+      category = $("#etype")
+        .val()
+        .join(",");
+      if ($("#miles").attr("class", "ui transparent label")) {
+        unit = "km";
+      }
+      url = `/events?address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}`;
+      appendToTable(url, offset);
+      $("#showMore").show();
+    });
+
+  $("#showMore").on("click", () => {
+    offset += 10;
+    url = url = `/events?address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}`;
+    $("#loader").show();
+    appendToTable(url);
+  });
+});
