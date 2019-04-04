@@ -11,11 +11,10 @@ Our application will allow users to select a location and an event type (concert
 ## Motivation
 An all-in-one application where users can find different events near their location or for a set date.
 
-<!-- ## Build status
-Build status of continus integration i.e. travis, appveyor etc. Ex. - 
+## Build status
+<b>Travis CLI</b>
+[![Build Status](https://travis-ci.org/akashnimare/foco.svg?branch=master)](https://travis-ci.com/andrayayay/project2)
 
-[![Build Status](https://travis-ci.org/akashnimare/foco.svg?branch=master)](https://travis-ci.org/akashnimare/foco)
-[![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/akashnimare/foco?branch=master&svg=true)](https://ci.appveyor.com/project/akashnimare/foco/branch/master) -->
 
 <!-- ## Code style
 If you're using any code style like xo, standard etc. That will help others while contributing to your project. Ex. -
