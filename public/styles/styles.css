@@ -14,7 +14,21 @@ body {
   padding: auto;
 }
 
-#rangeDisplay {
+#facebook-button {
+  margin-left: 4px;
+}
+
+#facebook-display,
+#resetDisplay {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#rangeDisplay,
+#attribution,
+#showMore {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,6 +47,11 @@ body {
 }
 
 #miles:hover,
-#kilometers:hover {
+#kilometers:hover,
+#reset {
   cursor: pointer;
+}
+
+#reset:active {
+  background-color: teal;
 }

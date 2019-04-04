@@ -18,6 +18,7 @@
     "moment": "^2.24.0",
     "mysql2": "^1.6.5",
     "request": "^2.88.0",
+    "semantic-ui-calendar": "0.0.8",
     "sequelize": "^5.2.11"
   },
   "devDependencies": {

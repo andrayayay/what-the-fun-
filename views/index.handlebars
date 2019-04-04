@@ -1,12 +1,34 @@
 <div class="ui container" id="home">
   <div class="ui segment">
     <div class="ui form" id="header">
-      <div class="two fields">
+      <div class="four fields">
+
+        <div class="field">
+          <div class="ui sub header">Around</div>
+          <div class="ui calendar" id="calendar">
+            <div class="ui input left icon">
+              <i class="calendar icon"></i>
+              <input autocomplete="off" type="text" placeholder="Date" id="calendar-input">
+            </div>
+          </div>
+
+        </div>
+
+        {{!-- Keyword Search --}}
+        <div class="field">
+          <div class="ui sub header">Keyword(s)</div>
+          <div class="ui fluid input focus">
+            <input autocomplete="off" type="text" name="keyword" placeholder="Optional" id="keyword">
+          </div>
+        </div>
+        {{!-- Keyword Search --}}
+
         {{!-- Category Dropdown --}}
         <div class="field">
-          <div class="ui sub header">Event Type</div>
+          <div class="ui sub header">Event Type<span style="color:red"><strong> *</strong><span></span></div>
           <select multiple="" name="events" id="etype" class="ui fluid normal dropdown">
-            <option value="">Type</option>
+            <option value="">Required</option>
+            <option value="concerts,festivals,performing-arts,sports,community,conferences,expos">All</option>
             <option value="concerts">Concerts</option>
             <option value="festivals">Festivals</option>
             <option value="performing-arts">Performing Arts</option>
@@ -20,36 +42,38 @@
 
         {{!-- Search Bar --}}
         <div class="field">
-          <div class="ui sub header">Location</div>
+          <div class="ui sub header">Location<span style="color:red"><strong> *</strong><span></span></div>
           <div class="ui fluid input focus">
-            <input type="text" placeholder="Search..." id="loc">
+            <input autocomplete="off" type="text" name="location" placeholder="Required" id="loc">
           </div>
         </div>
         {{!-- Search Bar --}}
 
       </div>
-    </div>
-    {{!-- End of Form --}}
 
-    {{!-- Range input slider --}}
-    <div class="ui row">
-      <div class="ui sub header">Search Radius</div>
-      <div class="ui teal range" id="range"></div>
-      <div class="ui transparent fluid input">
-        <input type="text" id="rangeInput">
-        <div class="ui teal label" id="miles">
-          mi
-        </div>
-        <div class="ui transparent label" id="kilometers">
-          km
+      {{!-- End of Form --}}
+
+      {{!-- Range input slider --}}
+      <div class="ui row">
+        <div class="ui sub header">Search Radius</div>
+        <div class="ui teal range" id="range"></div>
+        <div class="ui transparent fluid input">
+          <input type="text" id="rangeInput">
+          <div class="ui teal label" id="miles">
+            mi
+          </div>
+          <div class="ui transparent label" id="kilometers">
+            km
+          </div>
         </div>
       </div>
+      <div class="ui reset button" id="reset">Reset</div>
     </div>
     {{!-- Range input slider --}}
 
 
   </div>
-  <div class="ui segment">
+  <div class="ui segment" id="resultsDisplay" style="display:none">
     <div class="ui grid" id="main-content">
       <table class="ui compact celled definition teal table">
         <thead class="full-width">
@@ -69,16 +93,24 @@
         </tbody>
         <tfoot class="full-width">
           <tr>
-            <th></th>
-            <th colspan="4">
-              <div class="ui right floated small teal labeled icon button">
-                <i class="user icon"></i> Share Events
-              </div>
-              <div class="ui small button">
+            <th>
+              <div class="ui small button" id="favoritesBtn">
                 Add Favorites
               </div>
-              <div class="ui small button" style="display:none" id="showMore">
+            </th>
+            <th>
+              <div class="ui small button" id="showMore">
                 Show More
+              </div>
+            </th>
+            <th> <a href="https://predicthq.com/" target="_blank" class="ui tiny center aligned label" id="attribution">
+                <img src="https://developer.predicthq.com/favicon.ico">
+                Powered by PredictHQ
+              </a></th>
+            <th></th>
+            <th>
+              <div class="ui small teal labeled icon button">
+                <i class="user icon"></i> Share Events
               </div>
             </th>
           </tr>

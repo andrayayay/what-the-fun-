@@ -3,38 +3,39 @@ const axios = require("axios");
 const moment = require("moment");
 const config = require("./config");
 
-const events = (lat, lon, cat, offset, range, callback) => {
+async function events(lat, lon, date, keyword, cat, offset, range, callback) {
   const AuthStr = "Bearer ".concat(config.AUTH.id);
-  const url = `https://api.predicthq.com/v1/events?category=${cat}&offset=${offset}&within=${range}@${lat},${lon}`;
+  const url = `https://api.predicthq.com/v1/events/`;
   var callbackData = [];
 
-  axios
-    .get(url, {
-      headers: { Authorization: AuthStr }
-    })
-    .then(response => {
-      callbackData = response.data.results;
-      if (callbackData.length === 0) {
-        var msg = "No results found!";
-        callbackData[0] = {
-          title: msg,
-          date: msg,
-          strAddr: msg,
-          start: msg
-        };
+  const response = await axios.get(url, {
+    headers: { Authorization: AuthStr },
+    params: {
+      q: keyword,
+      category: cat,
+      offset: offset,
+      within: `${range}@${lat},${lon}`,
+      "start_around.origin": date
+    }
+  });
+  callbackData = response.data.results;
+  if (callbackData.length === 0) {
+    var msg = "No results found!";
+    callbackData[0] = {
+      title: msg,
+      date: "",
+      strAddr: "",
+      start: ""
+    };
+    callback(undefined, callbackData);
+  } else {
+    reverseGeolocate(callbackData).then(() => {
+      setTimeout(() => {
         callback(undefined, callbackData);
-      } else {
-        reverseGeolocate(callbackData).then(() => {
-          setTimeout(() => {
-            callback(undefined, callbackData);
-          }, 2000);
-        });
-      }
-    })
-    .catch(error => {
-      throw error;
+      }, 2000);
     });
-};
+  }
+}
 
 async function reverseGeolocate(array) {
   array.forEach(el => {
