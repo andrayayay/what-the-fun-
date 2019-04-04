@@ -133,7 +133,7 @@ $(document).ready(function() {
   $(".ui.dropdown").dropdown();
   $("#loader").hide();
   $("#range").range({
-    min: 0,
+    min: 1,
     max: 100,
     start: 20,
     step: 1,
