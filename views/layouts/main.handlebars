@@ -15,9 +15,17 @@
 </head>
 
 <body>
+
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=380908629445630&autoLogAppEvents=1"></script>
+
+  <script>
+
   <script>
     var FBAuthResponse;
     // This is called with the results from from FB.getLoginStatus().
+
     function statusChangeCallback(response) {
       console.log('statusChangeCallback');
       console.log(response);
@@ -41,6 +49,8 @@
     function checkLoginState() {
       FB.getLoginStatus(function (response) {
         statusChangeCallback(response);
+        console.log(response);
+
       });
     }
 
@@ -68,6 +78,7 @@
       FB.getLoginStatus(function (response) {
         statusChangeCallback(response);
         FBAuthResponse = response;
+        console.log(response);
       });
 
     };
@@ -91,6 +102,8 @@
           response.name;
       });
     }
+
+
   </script>
 
   <!--
@@ -98,6 +111,9 @@
   the JavaScript SDK to present a graphical Login button that triggers
   the FB.login() function when clicked.
 -->
+
+  <div id="status">
+  </div>
 
   <header>
     <div class="ui container" id="home">
@@ -143,5 +159,6 @@
   <script type="text/javascript" src="/js/range.js"></script>
   <script src="/js/index.js"></script>
 </body>
+
 
 </html>
