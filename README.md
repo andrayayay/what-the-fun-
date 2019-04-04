@@ -1,6 +1,10 @@
 ## Project title
 What the Fun (WTF)
 
+<b>Click here to view project:</b>
+- [WTF](https://andrayayay.github.io/project2/)
+
+
 ## Description 
 Our application will allow users to select a location and an event type (concerts, festivals, performing arts, sports, community events) that will then search for events near them. Users will also be able to add an event to their favorites and share events to facebook and other users. Our login feature will be created with OAuth and we will store users and events in MySQL Database.
 
@@ -23,7 +27,7 @@ If you're using any code style like xo, standard etc. That will help others whil
 
 ## Tech/framework used
 <b>Built with</b>
-- [Semantic-ui](https://semantic-ui.io)
+- [Semantic-ui](https://semantic-ui.com/)
 - [Node](https://nodejs.org/en/)
 - [Express](https://expressjs.com/)
 - [MySQL](https://www.mysql.com/)
@@ -53,11 +57,11 @@ Describe and show how to run the tests with code examples. -->
 If people like your project they’ll want to learn how they can use it. To do so include step by step guide to use your project. -->
 
 ## Credits
-- Andraya (front-end)
-- Brielle (back-end)
-- Matt (front-end)
-- Maurice (back-end)
-- Rachel (back-end)
+- [Andraya Smith](https://github.com/andrayayay)
+- [Brielle Carvalho](https://github.com/BrielleCarvalho)
+- [Matt F.](https://github.com/zomg830)
+- [Maurice Partee](https://github.com/Mpartee123)
+- [Rachel Rodriguez](https://github.com/Rachelrodz33)
 
 <!-- ## License
 A short snippet describing the license (MIT, Apache etc)
