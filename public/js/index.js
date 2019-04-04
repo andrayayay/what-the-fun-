@@ -108,7 +108,6 @@ $(document).ready(function() {
     fetch(url).then(response => {
       response.json().then(data => {
         respData = data;
-        console.log(respData);
         if (data.error) {
           $("#tableBody").append(`
           <tr>${data.error}</tr>`);
@@ -153,7 +152,6 @@ $(document).ready(function() {
       });
     } else alert("You have no favorites selected!");
     postData.unshift(FBAuthResponse);
-    console.log(postData);
   });
 
   // Initializing the Semantic UI Dropdown
@@ -185,6 +183,7 @@ $(document).ready(function() {
 
   var offset = 0;
   var date = "";
+  var keyword = "";
   var url = "";
   var range = "";
   var location = "";
@@ -233,7 +232,6 @@ $(document).ready(function() {
         date = new Date($("#calendar-input").val());
       }
       range = $("#rangeInput").val();
-      console.log(date);
       location = $("#loc").val();
       keyword = $("#keyword").val();
       category = $("#etype")
