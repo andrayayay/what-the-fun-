@@ -140,6 +140,10 @@ $(document).ready(function() {
     input: "#rangeInput"
   });
 
+  $("#facebook-login").on("click", function fb_login() {
+    FB.login(function() {}, { scope: "email,public_profile" });
+  });
+
   $("#miles").on("click", () => {
     $("#miles").attr("class", "ui teal label");
     $("#kilometers").attr("class", "ui transparent label");
