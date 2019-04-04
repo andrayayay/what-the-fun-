@@ -1,5 +1,5 @@
 ## Project title
-What the Fun (WTF)
+<strong>What the Fun (WTF)</strong>
 
 <b>Click here to view project:</b>
 - [WTF](https://andrayayay.github.io/project2/)
