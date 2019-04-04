@@ -21,7 +21,7 @@ If you're using any code style like xo, standard etc. That will help others whil
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
  
 ## Screenshots
-Include logo/demo screenshot etc.
+![](public/img/Project2UI.png?raw=true)
 
 ## Tech/framework used
 <b>Built with</b>
@@ -50,9 +50,6 @@ Describe and show how to run the tests with code examples.
 
 ## How to use?
 If people like your project they’ll want to learn how they can use it. To do so include step by step guide to use your project.
-
-## Contribute
-Let people know how they can contribute into your project. A [contributing guideline](https://github.com/zulip/zulip-electron/blob/master/CONTRIBUTING.md) will be a big plus.
 
 ## Credits
 - Andraya (front-end)
