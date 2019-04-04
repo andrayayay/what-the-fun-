@@ -1,7 +1,7 @@
 ## Project title
 What the Fun (WTF)
 
-##Description 
+## Description 
 Our application will allow users to select a location and an event type (concerts, festivals, performing arts, sports, community events) that will then search for events near them. Users will also be able to add an event to their favorites and share events to facebook and other users.
 Login feature with OAuth
 Store users and events in MySQL Database
@@ -55,11 +55,11 @@ If people like your project they’ll want to learn how they can use it. To do s
 Let people know how they can contribute into your project. A [contributing guideline](https://github.com/zulip/zulip-electron/blob/master/CONTRIBUTING.md) will be a big plus.
 
 ## Credits
-Andraya (front-end)
-Brielle (back-end)
-Matt (front-end)
-Maurice (back-end)
-Rachel (back-end)
+- Andraya (front-end)
+- Brielle (back-end)
+- Matt (front-end)
+- Maurice (back-end)
+- Rachel (back-end)
 
 ## License
 A short snippet describing the license (MIT, Apache etc)
