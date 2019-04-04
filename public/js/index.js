@@ -1,3 +1,4 @@
+/*global FB*/
 // Get references to page elements
 var $exampleText = $("#example-text");
 var $exampleDescription = $("#example-description");
@@ -138,6 +139,10 @@ $(document).ready(function() {
     start: 20,
     step: 1,
     input: "#rangeInput"
+  });
+
+  $("#facebook-login").on("click", function fb_login() {
+    FB.login(function() {}, { scope: "email,public_profile" });
   });
 
   $("#miles").on("click", () => {

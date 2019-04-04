@@ -13,11 +13,16 @@
 </head>
 
 <body>
+
   <div id="fb-root"></div>
   <script async defer crossorigin="anonymous"
     src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=380908629445630&autoLogAppEvents=1"></script>
 
   <script>
+
+  <script>
+    // This is called with the results from from FB.getLoginStatus().
+
     function statusChangeCallback(response) {
       console.log('statusChangeCallback');
       console.log(response);
@@ -42,6 +47,7 @@
       FB.getLoginStatus(function (response) {
         statusChangeCallback(response);
         console.log(response);
+
       });
     }
 
@@ -93,10 +99,31 @@
       });
     }
 
+
   </script>
+
+  <!--
+  Below we include the Login Button social plugin. This button uses
+  the JavaScript SDK to present a graphical Login button that triggers
+  the FB.login() function when clicked.
+-->
+
+  <div id="status">
+  </div>
 
   <header>
     <div class="ui container" id="home">
+      <div class="ui segment">
+        <div class="ui grid">
+          <div class="four column row">
+            <div class="right floated column">
+              <button class="ui icon blue right floated button">
+                <i class="facebook icon" id="facebook-login"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="ui segment">
         <div class="ui grid" id="navbar">
           <div class="ui teal three item labeled inverted menu">
