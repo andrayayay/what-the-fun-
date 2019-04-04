@@ -45,10 +45,11 @@ Show what the library does as concisely as possible, developers should be able t
 - Type 'npm install'
 - Type 'npm start'
 - Open on localhost:3000
+
 ## API Reference
-- PredictHQ
-- Google Geolocation
-- Map Box
+- [PredictHQ](https://www.predicthq.com/)
+- [Google Geolocation](https://developers.google.com/maps/documentation/geolocation/intro?utm_source=google&utm_medium=cpc&utm_campaign=FY18-Q2-global-demandgen-paidsearchonnetworkhouseads-cs-maps_contactsal_saf&utm_content=text-ad-none-none-DEV_c-CRE_315916117601-ADGP_Hybrid+%7C+AW+SEM+%7C+BKWS+~+Google+Maps+Geolocation+API-KWID_43700039136946123-aud-581578347266:kwd-300650646226-userloc_9028280&utm_term=KW_google%20geolocation%20api-ST_google+geolocation+api&gclid=CIqi--2jteECFbOPxQId7L0IQA)
+- [Map Box](https://www.mapbox.com/)
 
 <!-- ## Tests
 Describe and show how to run the tests with code examples. -->
