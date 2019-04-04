@@ -4,8 +4,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+  <link
+    href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.css"
+    rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="/styles/range.css" media="screen" title="no title" charset="utf-8">
   <link rel="stylesheet" href="/styles/styles.css" media="screen" title="no title" charset="utf-8">
   <link rel="icon" href="/img/W.png">
@@ -14,6 +16,7 @@
 
 <body>
   <script>
+    var FBAuthResponse;
     // This is called with the results from from FB.getLoginStatus().
     function statusChangeCallback(response) {
       console.log('statusChangeCallback');
@@ -64,6 +67,7 @@
 
       FB.getLoginStatus(function (response) {
         statusChangeCallback(response);
+        FBAuthResponse = response;
       });
 
     };
@@ -84,7 +88,7 @@
       FB.api('/me', function (response) {
         console.log('Successful login for: ' + response.name);
         document.getElementById('status').innerHTML =
-          'Thanks for logging in, ' + response.name + '!';
+          response.name;
       });
     }
   </script>
@@ -95,15 +99,15 @@
   the FB.login() function when clicked.
 -->
 
-  <div id="status">
-  </div>
   <header>
     <div class="ui container" id="home">
       <div class="ui segment">
         <div class="ui grid">
-          <div class="four column row">
-            <div class="right floated column">
-              <button class="ui icon blue right floated button">
+          <div class="sixteen column row">
+            <div class="right floated eight wide column" id="facebook-display">
+              <div id="status">
+              </div>
+              <button class="ui icon blue button" id="facebook-button">
                 <i class="facebook icon" id="facebook-login"></i>
               </button>
             </div>
@@ -134,6 +138,8 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+  <script
+    src="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.js"></script>
   <script type="text/javascript" src="/js/range.js"></script>
   <script src="/js/index.js"></script>
 </body>

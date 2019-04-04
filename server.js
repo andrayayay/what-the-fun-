@@ -3,6 +3,7 @@ var express = require("express");
 var exphbs = require("express-handlebars");
 const geocode = require("./src/utils/geocode");
 const events = require("./src/utils/events");
+const moment = require("moment");
 
 var db = require("./models");
 
@@ -46,6 +47,8 @@ app.get("/events", (req, res) => {
     events(
       latitude,
       longitude,
+      moment(new Date(req.query.date)).format("YYYY-MM-DD"),
+      req.query.q,
       req.query.category,
       req.query.offset,
       req.query.range,

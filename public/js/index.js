@@ -1,4 +1,5 @@
 /*global FB*/
+/*global FBAuthResponse*/
 // Get references to page elements
 var $exampleText = $("#example-text");
 var $exampleDescription = $("#example-description");
@@ -101,9 +102,13 @@ $exampleList.on("click", ".delete", handleDeleteBtnClick);
 
 // END OF BOILER PLATE
 $(document).ready(function() {
+  var respData;
+  const postData = [];
   const appendToTable = url => {
     fetch(url).then(response => {
       response.json().then(data => {
+        respData = data;
+        console.log(respData);
         if (data.error) {
           $("#tableBody").append(`
           <tr>${data.error}</tr>`);
@@ -115,7 +120,9 @@ $(document).ready(function() {
         <tr>
         <td class="collapsing">
           <div class="ui fitted toggle checkbox">
-            <input type="checkbox" data-id=${el.id}> <label></label>
+            <input class="favorite" type="checkbox" event_id=${
+              el.id
+            }> <label></label>
           </div>
         </td>
         <td>${el.title}</td>
@@ -130,6 +137,25 @@ $(document).ready(function() {
     });
   };
 
+  $("#favoritesBtn").on("click", () => {
+    let idArr = [];
+    postData.length = 0;
+    if ($("input:checked").length > 0) {
+      $.each($("input:checked"), (index, value) => {
+        idArr.push($(value).attr("event_id"));
+      });
+      $.each($(idArr), (index, value) => {
+        respData.forEach(el => {
+          if (el.id === value) {
+            postData.push(el);
+          }
+        });
+      });
+    } else alert("You have no favorites selected!");
+    postData.unshift(FBAuthResponse);
+    console.log(postData);
+  });
+
   // Initializing the Semantic UI Dropdown
   $(".ui.dropdown").dropdown();
   $("#loader").hide();
@@ -140,6 +166,8 @@ $(document).ready(function() {
     step: 1,
     input: "#rangeInput"
   });
+
+  $("#calendar").calendar({ type: "date" });
 
   $("#facebook-login").on("click", function fb_login() {
     FB.login(function() {}, { scope: "email,public_profile" });
@@ -156,6 +184,7 @@ $(document).ready(function() {
   });
 
   var offset = 0;
+  var date = "";
   var url = "";
   var range = "";
   var location = "";
@@ -168,30 +197,64 @@ $(document).ready(function() {
     $("#friendsPage").attr("class", "item active");
   } else $("#homePage").attr("class", "item active");
 
-  $("#header")
-    .form()
-    .submit(e => {
+  const formValidated = $("#header").form({
+    fields: {
+      location: {
+        identifier: "location",
+        rules: [
+          {
+            type: "minLength[2]",
+            prompt: "Please enter a location"
+          }
+        ]
+      },
+      events: {
+        identifier: "events",
+        rules: [
+          {
+            type: "minCount[1]",
+            prompt: "Please select an event tag"
+          }
+        ]
+      }
+    }
+  });
+
+  formValidated.submit(e => {
+    if ($(formValidated).form("is valid")) {
       offset = 0;
       e.preventDefault();
       $("#tableBody").html("");
+      $("#resultsDisplay").fadeIn();
       $("#loader").show();
+      if ($("#calendar-input").val() === "") {
+        date = new Date($.now());
+      } else {
+        date = new Date($("#calendar-input").val());
+      }
       range = $("#rangeInput").val();
+      console.log(date);
       location = $("#loc").val();
+      keyword = $("#keyword").val();
       category = $("#etype")
         .val()
         .join(",");
-      if ($("#miles").attr("class", "ui transparent label")) {
+      if ($("#miles").attr("class") === "ui transparent label") {
         unit = "km";
       }
-      url = `/events?address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}`;
+      url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}`;
       appendToTable(url, offset);
       $("#showMore").show();
-    });
+    }
+  });
+
+  $("#reset").on("click", () => $("#range").range("set value", 20));
 
   $("#showMore").on("click", () => {
     offset += 10;
-    url = url = `/events?address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}`;
+    url = url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}`;
     $("#loader").show();
     appendToTable(url);
+    $("#showMore").hide();
   });
 });
