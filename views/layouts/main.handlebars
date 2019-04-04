@@ -13,8 +13,16 @@
 </head>
 
 <body>
+
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=380908629445630&autoLogAppEvents=1"></script>
+
+  <script>
+
   <script>
     // This is called with the results from from FB.getLoginStatus().
+
     function statusChangeCallback(response) {
       console.log('statusChangeCallback');
       console.log(response);
@@ -38,6 +46,8 @@
     function checkLoginState() {
       FB.getLoginStatus(function (response) {
         statusChangeCallback(response);
+        console.log(response);
+
       });
     }
 
@@ -64,6 +74,7 @@
 
       FB.getLoginStatus(function (response) {
         statusChangeCallback(response);
+        console.log(response);
       });
 
     };
@@ -87,6 +98,8 @@
           'Thanks for logging in, ' + response.name + '!';
       });
     }
+
+
   </script>
 
   <!--
@@ -97,6 +110,7 @@
 
   <div id="status">
   </div>
+
   <header>
     <div class="ui container" id="home">
       <div class="ui segment">
@@ -137,5 +151,6 @@
   <script type="text/javascript" src="/js/range.js"></script>
   <script src="/js/index.js"></script>
 </body>
+
 
 </html>
