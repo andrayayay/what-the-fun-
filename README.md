@@ -44,7 +44,7 @@ Show what the library does as concisely as possible, developers should be able t
 - Open project in terminal
 - Type 'npm install'
 - Type 'npm start'
-
+- Open on localhost:3000
 ## API Reference
 - PredictHQ
 - Google Geolocation
