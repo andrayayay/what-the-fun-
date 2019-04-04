@@ -100,6 +100,9 @@ $exampleList.on("click", ".delete", handleDeleteBtnClick);
 
 // END OF BOILER PLATE
 $(document).ready(function() {
+  const handleChange = id => {
+    console.log(id);
+  }
   const appendToTable = url => {
     fetch(url).then(response => {
       response.json().then(data => {
@@ -114,7 +117,7 @@ $(document).ready(function() {
         <tr>
         <td class="collapsing">
           <div class="ui fitted toggle checkbox">
-            <input type="checkbox" data-id=${el.id}> <label></label>
+            <input type="checkbox" class="myToggle" id=${el.id}  data-id=${el.id}> <label></label>
           </div>
         </td>
         <td>${el.title}</td>
@@ -148,6 +151,12 @@ $(document).ready(function() {
   $("#kilometers").on("click", () => {
     $("#kilometers").attr("class", "ui teal label");
     $("#miles").attr("class", "ui transparent label");
+  });
+
+  $("body").on("click", ".myToggle", (e) => {
+    let id = e;
+    console.log(id);
+    //post method with the id
   });
 
   var offset = 0;
