@@ -60,6 +60,10 @@ app.get("/events", (req, res) => {
   });
 });
 
+app.post("/api/create", (req,res)=>{
+  console.log("This is req.body on server.js: ", req.body);
+})
+
 // Routes
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);

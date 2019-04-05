@@ -20,7 +20,6 @@
   <script async defer crossorigin="anonymous"
     src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=380908629445630&autoLogAppEvents=1"></script>
 
-  <script>
 
   <script>
     var FBAuthResponse;
@@ -97,6 +96,7 @@
     function testAPI() {
       console.log('Welcome!  Fetching your information.... ');
       FB.api('/me', function (response) {
+        FBAuthResponse.authResponse.name = response.name;
         console.log('Successful login for: ' + response.name);
         document.getElementById('status').innerHTML =
           response.name;

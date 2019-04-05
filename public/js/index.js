@@ -1,49 +1,52 @@
 /*global FB*/
 /*global FBAuthResponse*/
 // Get references to page elements
-var $exampleText = $("#example-text");
-var $exampleDescription = $("#example-description");
+var $favoritesText = $("#favorites-text");
+var $favoritesDescription = $("#favorites-description");
 var $submitBtn = $("#submit");
-var $exampleList = $("#example-list");
+var $favoritesList = $("#favorites-list");
+
+const postData = [];
 
 // The API object contains methods for each kind of request we'll make
 var API = {
-  saveExample: function(example) {
+  saveFavorites: function(favs) {
     return $.ajax({
       headers: {
         "Content-Type": "application/json"
       },
       type: "POST",
-      url: "api/examples",
-      data: JSON.stringify(example)
+      url: "api/create",
+      data: JSON.stringify(favs)
+
     });
   },
-  getExamples: function() {
+  getFavorites: function() {
     return $.ajax({
-      url: "api/examples",
+      url: "api/favorites",
       type: "GET"
     });
   },
-  deleteExample: function(id) {
+  deleteFavorites: function(id) {
     return $.ajax({
-      url: "api/examples/" + id,
+      url: "api/favorites/" + id,
       type: "DELETE"
     });
   }
 };
 
-// refreshExamples gets new examples from the db and repopulates the list
-var refreshExamples = function() {
-  API.getExamples().then(function(data) {
-    var $examples = data.map(function(example) {
+// refreshfavoritess gets new favoritess from the db and repopulates the list
+var refreshFavorites = function() {
+  API.getFavorites().then(function(data) {
+    var $favorites = data.map(function() {
       var $a = $("<a>")
-        .text(example.text)
-        .attr("href", "/example/" + example.id);
+        .text(Favorites.text)
+        .attr("href", "/favorites/" + Favorites.id);
 
       var $li = $("<li>")
         .attr({
           class: "list-group-item",
-          "data-id": example.id
+          "data-id": Favorites.id
         })
         .append($a);
 
@@ -56,54 +59,53 @@ var refreshExamples = function() {
       return $li;
     });
 
-    $exampleList.empty();
-    $exampleList.append($examples);
+    $favoritesList.empty();
+    $favoritesList.append($favorites);
   });
 };
 
-// handleFormSubmit is called whenever we submit a new example
-// Save the new example to the db and refresh the list
+// handleFormSubmit is called whenever we submit a new favorites
+// Save the new favorites to the db and refresh the list
 var handleFormSubmit = function(event) {
   event.preventDefault();
 
-  var example = {
-    text: $exampleText.val().trim(),
-    description: $exampleDescription.val().trim()
+  var favorites = {
+    text: $favoritesText.val().trim(),
+    description: $favoritesDescription.val().trim()
   };
 
-  if (!(example.text && example.description)) {
-    alert("You must enter an example text and description!");
+  if (!(favorites.text && favorites.description)) {
+    alert("You must enter an favorites text and description!");
     return;
   }
 
-  API.saveExample(example).then(function() {
-    refreshExamples();
+  API.savefavorites(favorites).then(function() {
+    refreshFavorites();
   });
 
-  $exampleText.val("");
-  $exampleDescription.val("");
+  $favoritesText.val("");
+  $favoritesDescription.val("");
 };
 
-// handleDeleteBtnClick is called when an example's delete button is clicked
-// Remove the example from the db and refresh the list
+// handleDeleteBtnClick is called when an favorites's delete button is clicked
+// Remove the favorites from the db and refresh the list
 var handleDeleteBtnClick = function() {
   var idToDelete = $(this)
     .parent()
     .attr("data-id");
 
-  API.deleteExample(idToDelete).then(function() {
-    refreshExamples();
+  API.deletefavorites(idToDelete).then(function() {
+    refreshFavorites();
   });
 };
 
 // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
-$exampleList.on("click", ".delete", handleDeleteBtnClick);
+$favoritesList.on("click", ".delete", handleDeleteBtnClick);
 
 // END OF BOILER PLATE
 $(document).ready(function() {
   var respData;
-  const postData = [];
   const appendToTable = url => {
     fetch(url).then(response => {
       response.json().then(data => {
@@ -147,11 +149,13 @@ $(document).ready(function() {
         respData.forEach(el => {
           if (el.id === value) {
             postData.push(el);
+            console.log(postData);
           }
         });
       });
     } else alert("You have no favorites selected!");
     postData.unshift(FBAuthResponse);
+    API.saveFavorites(postData);
   });
 
   // Initializing the Semantic UI Dropdown
@@ -256,3 +260,5 @@ $(document).ready(function() {
     $("#showMore").hide();
   });
 });
+
+
