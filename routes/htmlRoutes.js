@@ -1,6 +1,6 @@
 var db = require("../models");
-var express = require("express");
-var app = express();
+// var express = require("express");
+// var app = express();
 const geocode = require("../src/utils/geocode");
 const events = require("../src/utils/events");
 const moment = require("moment");
@@ -29,7 +29,7 @@ module.exports = function(app) {
 
   app.post("/api/create", (req, res) => {
     res.render(req.body[1]);
-    console.log("This is req.body on htmlRoutes.js: " + req.body[1].category);
+    // console.log("This is req.body on htmlRoutes.js: " + req.body[1].category);
   });
 
 
@@ -69,9 +69,9 @@ module.exports = function(app) {
     });
   });
 
-  app.post("/api/examples", (req, res) => {
-    console.log(res);
-  });
+  // app.post("/api/examples", (req, res) => {
+  //   // console.log(res);
+  // });
 
 // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
