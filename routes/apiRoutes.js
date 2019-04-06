@@ -5,13 +5,13 @@ module.exports = function(app) {
   app.get("/api/favorites", function(req, res) {
     db.Favorites.findAll({}).then(function(favs) {
       res.json(favs);
-      console.log(res.body);
+      // console.log(res.body);
     });
   });
 
   // Create a new example
   app.post("/api/create", function(req, res) {
-    console.log("This is req.body on apiRoutes.js: ", req.body);
+    // console.log("This is req.body on apiRoutes.js: ", req.body);
     db.Favorites.create({
       userId: "1",
       username: "brielle",
