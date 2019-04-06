@@ -1,4 +1,4 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   var Favorites = sequelize.define("Favorites", {
     userID: DataTypes.STRING,
     username: DataTypes.STRING,
@@ -9,7 +9,13 @@ module.exports = function(sequelize, DataTypes) {
     startTime: DataTypes.TIME,
     timeZone: DataTypes.STRING,
     eventID: DataTypes.INTEGER
-  });
-  return Favorites;
+  }, {
+      freezeTableName: true
+    });
+
+    return Favorites;
+
 };
+
+
 

@@ -1,4 +1,4 @@
-var db = require("../models");
+var Favorites = require("../models/example.js")
 
 module.exports = function(app) {
   // Get all examples
@@ -13,6 +13,8 @@ module.exports = function(app) {
   app.post("/api/create", function(req, res) {
     console.log("This is req.body on apiRoutes.js: ", req.body);
     db.Favorites.create({
+      userId: "1",
+      username: "brielle",
       title: req.body.title,
       eventDate: req.body.date,
       address: req.body.location,
@@ -20,11 +22,10 @@ module.exports = function(app) {
       startTime: req.body.start,
       timeZone: req.body.timezone,
       eventID: req.body.id
-      
-    }).then(function(favs) {
-      console.log("This is the result: " + res);
-      res.json(favs);
-      // console.log(req.body);
+    }).then(function(dbFavorites) {
+      console.log("**************************              This is the result: ");
+      //res.json(dbFavorites);
+
     });
   });
 

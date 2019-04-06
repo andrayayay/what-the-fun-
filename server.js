@@ -62,7 +62,11 @@ app.get("/events", (req, res) => {
 
 app.post("/api/create", (req,res)=>{
   console.log("This is req.body on server.js: ", req.body);
-})
+}).then(function(dbFavorites) {
+  console.log("**************************              This is the result: ");
+  //res.json(dbFavorites);
+
+});
 
 // Routes
 require("./routes/apiRoutes")(app);
