@@ -152,6 +152,7 @@ $(document).ready(function() {
             console.log(postData);
           }
         });
+
       });
     } else alert("You have no favorites selected!");
     postData.unshift(FBAuthResponse);

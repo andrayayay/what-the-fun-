@@ -22,7 +22,7 @@ module.exports = function(app) {
       eventID: req.body.id
       
     }).then(function(favs) {
-      console.log("This is the result: " + res);
+      console.log("This is the result: " , favs);
       res.json(favs);
       // console.log(req.body);
     });
