@@ -4,18 +4,21 @@
 var $favoritesText = $("#favorites-text");
 var $favoritesDescription = $("#favorites-description");
 var $submitBtn = $("#submit");
+
 var $favoritesList = $("#favorites-list");
 
-const postData = [];
+var postData = [];
 
 // The API object contains methods for each kind of request we'll make
 var API = {
   saveFavorites: function(favs) {
+
     return $.ajax({
       headers: {
         "Content-Type": "application/json"
       },
       type: "POST",
+
       url: "api/create",
       data: JSON.stringify(favs)
 
@@ -109,7 +112,12 @@ $(document).ready(function() {
   const appendToTable = url => {
     fetch(url).then(response => {
       response.json().then(data => {
-        respData = data;
+        if (respData === undefined) respData = data;
+        else {
+          data.forEach(el => {
+            respData.push(el);
+          });
+        }
         if (data.error) {
           $("#tableBody").append(`
           <tr>${data.error}</tr>`);
@@ -140,7 +148,7 @@ $(document).ready(function() {
 
   $("#favoritesBtn").on("click", () => {
     let idArr = [];
-    postData.length = 0;
+    postData = [];
     if ($("input:checked").length > 0) {
       $.each($("input:checked"), (index, value) => {
         idArr.push($(value).attr("event_id"));
@@ -172,7 +180,7 @@ $(document).ready(function() {
 
   $("#calendar").calendar({ type: "date" });
 
-  $("#facebook-login").on("click", function fb_login() {
+  $("#facebook-button").on("click", function fb_login() {
     FB.login(function() {}, { scope: "email,public_profile" });
   });
 
