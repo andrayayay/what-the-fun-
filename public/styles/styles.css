@@ -27,8 +27,7 @@ body {
 }
 
 #rangeDisplay,
-#attribution,
-#showMore {
+#attribution {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,7 +47,8 @@ body {
 
 #miles:hover,
 #kilometers:hover,
-#reset {
+#reset:hover,
+#showMore:hover {
   cursor: pointer;
 }
 

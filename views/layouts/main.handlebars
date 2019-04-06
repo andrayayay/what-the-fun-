@@ -15,15 +15,13 @@
 </head>
 
 <body>
-
   <div id="fb-root"></div>
   <script async defer crossorigin="anonymous"
     src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=380908629445630&autoLogAppEvents=1"></script>
 
-  <script>
 
   <script>
-    var FBAuthResponse;
+    var FBAuthResponse
     // This is called with the results from from FB.getLoginStatus().
 
     function statusChangeCallback(response) {
@@ -50,7 +48,6 @@
       FB.getLoginStatus(function (response) {
         statusChangeCallback(response);
         console.log(response);
-
       });
     }
 
@@ -97,6 +94,7 @@
     function testAPI() {
       console.log('Welcome!  Fetching your information.... ');
       FB.api('/me', function (response) {
+        FBAuthResponse.authResponse.name = response.name;
         console.log('Successful login for: ' + response.name);
         document.getElementById('status').innerHTML =
           response.name;
@@ -111,10 +109,6 @@
   the JavaScript SDK to present a graphical Login button that triggers
   the FB.login() function when clicked.
 -->
-
-  <div id="status">
-  </div>
-
   <header>
     <div class="ui container" id="home">
       <div class="ui segment">
@@ -123,8 +117,9 @@
             <div class="right floated eight wide column" id="facebook-display">
               <div id="status">
               </div>
-              <button class="ui icon blue button" id="facebook-button">
-                <i class="facebook icon" id="facebook-login"></i>
+              <button class="ui facebook button" id="facebook-button">
+                <i class="facebook icon"></i>
+                Facebook
               </button>
             </div>
           </div>

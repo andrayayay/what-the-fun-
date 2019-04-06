@@ -36,6 +36,11 @@ app.get("/favorites", (req, res) => {
   });
 });
 
+// app.post("/api/favorites", (req, res) => {
+//   console.log(req.body);
+//   console.log(res);
+// });
+
 app.get("/friends", (req, res) => {
   res.render("friends", {
     title: "Friends"
