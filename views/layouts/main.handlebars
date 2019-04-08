@@ -5,12 +5,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-  <link
-    href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.css"
-    rel="stylesheet" type="text/css" />
+  <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.css"rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="/styles/range.css" media="screen" title="no title" charset="utf-8">
   <link rel="stylesheet" href="/styles/styles.css" media="screen" title="no title" charset="utf-8">
   <link rel="icon" href="/img/W.png">
+
+    {{!-- Google login info --}}
+  <meta name="google-signin-scope" content="profile email">
+  <meta name="google-signin-client_id" content="771288009271-0dgafqif6vide2hvugdlejduli0nv763.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+
   <title>What The Fun?!</title>
 </head>
 
@@ -121,6 +125,8 @@
                 <i class="facebook icon"></i>
                 Facebook
               </button>
+              {{!-- Google Sign in --}}
+              <div class="g-signin2" id="google" data-onsuccess="onSignIn" data-theme="dark"></div>
             </div>
           </div>
         </div>
@@ -145,7 +151,11 @@
       </div>
     </div>
   </header>
+
+
   {{{body}}}
+
+
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
