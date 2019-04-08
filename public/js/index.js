@@ -7,12 +7,9 @@ var $submitBtn = $("#submit");
 
 var $favoritesList = $("#favorites-list");
 
-var postData = [];
-
 // The API object contains methods for each kind of request we'll make
 var API = {
   saveFavorites: function(favs) {
-
     return $.ajax({
       headers: {
         "Content-Type": "application/json"
@@ -21,7 +18,6 @@ var API = {
 
       url: "api/create",
       data: JSON.stringify(favs)
-
     });
   },
   getFavorites: function() {
@@ -128,10 +124,10 @@ $(document).ready(function() {
           $("#tableBody").append(`
         <tr>
         <td class="collapsing">
-          <div class="ui fitted toggle checkbox">
-            <input class="favorite" type="checkbox" event_id=${
-              el.id
-            }> <label></label>
+          <div class="ui teal basic button favorite" data-id=${
+            el.id
+          } data-toggle=false>
+            <i class="star icon" style="margin:auto"></i> 
           </div>
         </td>
         <td>${el.title}</td>
@@ -139,32 +135,31 @@ $(document).ready(function() {
         <td><a href="https://www.google.com/maps/place/?q=place_id:${
           el.place_id
         }" target="_blank">${el.strAddr}</a></td>
-        <td>${el.start}</td>
+        <td>${el.start_time}</td>
       </tr>`);
         });
       });
     });
   };
 
-  $("#favoritesBtn").on("click", () => {
-    let idArr = [];
-    postData = [];
-    if ($("input:checked").length > 0) {
-      $.each($("input:checked"), (index, value) => {
-        idArr.push($(value).attr("event_id"));
-      });
-      $.each($(idArr), (index, value) => {
-        respData.forEach(el => {
-          if (el.id === value) {
-            postData.push(el);
-            console.log(postData);
-          }
-        });
-
-      });
-    } else alert("You have no favorites selected!");
-    postData.unshift(FBAuthResponse);
-    API.saveFavorites(postData);
+  $(document).on("click", ".favorite", function() {
+    let event_id = $(this).data("id");
+    respData.forEach(el => {
+      if (el.id === event_id) {
+        $.extend(postData, el);
+      }
+    });
+    if ($(this).data("toggle") === false) {
+      $(this).attr("class", "ui teal button favorite");
+      console.log("Toggled true");
+      API.saveFavorites(postData);
+      $(this).data("toggle", true);
+    } else {
+      $(this).attr("class", "ui teal basic button favorite");
+      console.log("Toggled False");
+      API.deleteFavorites(postData);
+      $(this).data("toggle", false);
+    }
   });
 
   // Initializing the Semantic UI Dropdown
@@ -269,5 +264,3 @@ $(document).ready(function() {
     $("#showMore").hide();
   });
 });
-
-

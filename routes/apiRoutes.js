@@ -1,4 +1,5 @@
 var db = require("../models");
+var moment = require("moment");
 
 module.exports = function(app) {
   // Get all examples
@@ -15,12 +16,11 @@ module.exports = function(app) {
     db.Favorites.create({
       title: req.body.title,
       eventDate: req.body.date,
-      address: req.body.location,
+      address: req.body.strAddr,
       placeId: req.body.place_id,
-      startTime: req.body.start,
+      startTime: moment(req.body.start).format("HH:mm:ss"),
       timeZone: req.body.timezone,
       eventID: req.body.id
-      
     }).then(function(favs) {
       // console.log("This is the result: " , favs);
       res.json(favs);
@@ -30,9 +30,7 @@ module.exports = function(app) {
 
   // Delete an example by id
   app.delete("/api/examples/:id", function(req, res) {
-    db.Favorites.destroy({ where: { id: req.params.id } }).then(function(
-      favs
-    ) {
+    db.Favorites.destroy({ where: { id: req.params.id } }).then(function(favs) {
       res.json(favs);
     });
   });

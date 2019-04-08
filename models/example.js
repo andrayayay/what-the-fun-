@@ -8,8 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     placeId: DataTypes.STRING,
     startTime: DataTypes.TIME,
     timeZone: DataTypes.STRING,
-    eventID: DataTypes.INTEGER
+    eventID: DataTypes.STRING
   });
   return Favorites;
 };
-
