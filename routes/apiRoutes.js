@@ -3,7 +3,9 @@ var moment = require("moment");
 
 module.exports = function(app) {
   // Get all examples
-  app.get("/api/favorites", function(req, res) {
+  app.get("/api/favorites/:userID", function(req, res) {
+    var userID = req.params.id;
+    console.log("id", userID);
     db.Favorites.findAll({}).then(function(favs) {
       res.json(favs);
       // console.log(res.body);
@@ -24,14 +26,14 @@ module.exports = function(app) {
       timeZone: req.body.timezone,
       eventID: req.body.id
     }).then(function(favs) {
-      // console.log("This is the result: " , favs);
+      console.log("This is the result: ", favs);
       res.json(favs);
       // console.log(req.body);
     });
   });
 
   // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
+  app.delete("/api/examples/", function(req, res) {
     db.Favorites.destroy({ where: { id: req.params.id } }).then(function(favs) {
       res.json(favs);
     });

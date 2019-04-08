@@ -108,7 +108,7 @@
 
     }
 
-
+    checkLoginState()
   </script>
 
   <header>
@@ -119,10 +119,8 @@
             <div class="right floated eight wide column" id="facebook-display">
               <div id="status">
               </div>
-              <div class="ui container">
-                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-                </fb:login-button>
-              </div>
+              <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" style="margin:auto">
+              </fb:login-button>
 
               {{!-- Google Sign in --}}
               <div class="ui contianer g-signin2" id="google" data-onsuccess="onSignIn" data-theme="dark"></div>

@@ -1,33 +1,34 @@
 /*global FB*/
 /*global postData*/
 
-var API = {
-  saveFavorites: function(favs) {
-    return $.ajax({
-      headers: {
-        "Content-Type": "application/json"
-      },
-      type: "POST",
-
-      url: "api/create",
-      data: JSON.stringify(favs)
-    });
-  },
-  getFavorites: function() {
-    return $.ajax({
-      url: "api/favorites",
-      type: "GET"
-    });
-  },
-  deleteFavorites: function(id) {
-    return $.ajax({
-      url: "api/favorites/" + id,
-      type: "DELETE"
-    });
-  }
-};
-
 $(document).ready(function() {
+  var API = {
+    saveFavorites: function(favs) {
+      return $.ajax({
+        headers: {
+          "Content-Type": "application/json"
+        },
+        type: "POST",
+
+        url: "api/create",
+        data: JSON.stringify(favs)
+      });
+    },
+    getFavorites: function(userID) {
+      console.log("sending request");
+      return $.ajax({
+        url: `api/favorites/${userID}`,
+        type: "GET"
+      });
+    },
+    deleteFavorites: function(id) {
+      return $.ajax({
+        url: "api/favorites/" + id,
+        type: "DELETE"
+      });
+    }
+  };
+
   var respData;
   const appendToTable = url => {
     fetch(url).then(response => {
@@ -171,7 +172,7 @@ $(document).ready(function() {
         unit = "km";
       }
       url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}`;
-      appendToTable(url, offset);
+      appendToTable(url);
       $("#showMore").show();
     }
   });
@@ -185,6 +186,7 @@ $(document).ready(function() {
     appendToTable(url);
     $("#showMore").hide();
   });
+  API.getFavorites(postData.userID);
 });
 
 // Get references to page elements

@@ -7,10 +7,11 @@ const moment = require("moment");
 module.exports = function(app) {
   // Load index page
   app.get("/favorites", function(req, res) {
+    // console.log("/favorites", req);
     db.Favorites.findAll({}).then(function(favs) {
-      res.render("index", {
+      res.render("favorites", {
         msg: "These are your favorite events!",
-        examples: favs
+        examples: JSON.stringify(favs)
       });
     });
   });
@@ -26,22 +27,14 @@ module.exports = function(app) {
     });
   });
 
-
   app.post("/api/create", (req, res) => {
     res.render(req.body[1]);
     // console.log("This is req.body on htmlRoutes.js: " + req.body[1].category);
   });
 
-
   app.get("/", (req, res) => {
     res.render("index", {
       title: "What the Fun?!"
-    });
-  });
-
-  app.get("/favorites", (req, res) => {
-    res.render("favorites", {
-      title: "Favorites"
     });
   });
 
@@ -73,7 +66,7 @@ module.exports = function(app) {
   //   // console.log(res);
   // });
 
-// Render 404 page for any unmatched routes
+  // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
   });
