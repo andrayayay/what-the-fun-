@@ -10,11 +10,11 @@ module.exports = function(app) {
   });
 
   // Create a new example
-  app.post("/api/create", function(req, res) {
-    console.log("This is req.body on apiRoutes.js: ", req.body);
+  app.post("/api/create", function(req) {
+    // console.log("This is req.body on apiRoutes.js: ", req.body);
     db.Favorites.create({
-      userId: "1",
-      username: "brielle",
+      userId: req.body[0].authResponse.userID,
+      username: req.body[0].authResponse.name,
       title: req.body[1].title,
       eventDate: req.body[1].date,
       address: req.body[1].strAddr,
@@ -22,8 +22,8 @@ module.exports = function(app) {
       startTime: req.body[1].start,
       timeZone: req.body[1].timezone,
       eventID: req.body[1].id
-    }).then(function(dbFavorites) {
-      console.log("**************************              This is the result: ");
+    }).then(function() {
+      // console.log("**************************              This is the result: ");
       //res.json(dbFavorites);
 
     });
