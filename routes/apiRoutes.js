@@ -1,4 +1,4 @@
-var Favorites = require("../models/example.js")
+var db = require("../models");
 
 module.exports = function(app) {
   // Get all examples
@@ -11,17 +11,17 @@ module.exports = function(app) {
 
   // Create a new example
   app.post("/api/create", function(req, res) {
-    // console.log("This is req.body on apiRoutes.js: ", req.body);
+    console.log("This is req.body on apiRoutes.js: ", req.body);
     db.Favorites.create({
       userId: "1",
       username: "brielle",
-      title: req.body.title,
-      eventDate: req.body.date,
-      address: req.body.location,
-      placeId: req.body.place_id,
-      startTime: req.body.start,
-      timeZone: req.body.timezone,
-      eventID: req.body.id
+      title: req.body[1].title,
+      eventDate: req.body[1].date,
+      address: req.body[1].strAddr,
+      placeId: req.body[1].place_id,
+      startTime: req.body[1].start,
+      timeZone: req.body[1].timezone,
+      eventID: req.body[1].id
     }).then(function(dbFavorites) {
       console.log("**************************              This is the result: ");
       //res.json(dbFavorites);

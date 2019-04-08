@@ -3,12 +3,12 @@ module.exports = function (sequelize, DataTypes) {
     userID: DataTypes.STRING,
     username: DataTypes.STRING,
     title: DataTypes.STRING,
-    eventDate: DataTypes.DATE,
+    eventDate: DataTypes.STRING,
     address: DataTypes.STRING,
     placeId: DataTypes.STRING,
-    startTime: DataTypes.TIME,
+    startTime: DataTypes.STRING,
     timeZone: DataTypes.STRING,
-    eventID: DataTypes.INTEGER
+    eventID: DataTypes.STRING
   }, {
       freezeTableName: true
     });
