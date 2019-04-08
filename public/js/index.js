@@ -15,7 +15,7 @@ $(document).ready(function() {
       });
     },
     getFavorites: function(userID) {
-      console.log("sending request");
+      // console.log("sending request");
       return $.ajax({
         url: `api/favorites/${userID}`,
         type: "GET"
