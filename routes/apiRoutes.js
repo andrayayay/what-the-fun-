@@ -17,6 +17,8 @@ module.exports = function(app) {
       title: req.body.title,
       eventDate: req.body.date,
       address: req.body.strAddr,
+      username: req.body.username,
+      userID: req.body.userID,
       placeId: req.body.place_id,
       startTime: moment(req.body.start).format("HH:mm:ss"),
       timeZone: req.body.timezone,

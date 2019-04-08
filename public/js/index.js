@@ -1,13 +1,6 @@
 /*global FB*/
-/*global FBAuthResponse*/
-// Get references to page elements
-var $favoritesText = $("#favorites-text");
-var $favoritesDescription = $("#favorites-description");
-var $submitBtn = $("#submit");
+/*global postData*/
 
-var $favoritesList = $("#favorites-list");
-
-// The API object contains methods for each kind of request we'll make
 var API = {
   saveFavorites: function(favs) {
     return $.ajax({
@@ -34,75 +27,6 @@ var API = {
   }
 };
 
-// refreshfavoritess gets new favoritess from the db and repopulates the list
-var refreshFavorites = function() {
-  API.getFavorites().then(function(data) {
-    var $favorites = data.map(function() {
-      var $a = $("<a>")
-        .text(Favorites.text)
-        .attr("href", "/favorites/" + Favorites.id);
-
-      var $li = $("<li>")
-        .attr({
-          class: "list-group-item",
-          "data-id": Favorites.id
-        })
-        .append($a);
-
-      var $button = $("<button>")
-        .addClass("btn btn-danger float-right delete")
-        .text("ｘ");
-
-      $li.append($button);
-
-      return $li;
-    });
-
-    $favoritesList.empty();
-    $favoritesList.append($favorites);
-  });
-};
-
-// handleFormSubmit is called whenever we submit a new favorites
-// Save the new favorites to the db and refresh the list
-var handleFormSubmit = function(event) {
-  event.preventDefault();
-
-  var favorites = {
-    text: $favoritesText.val().trim(),
-    description: $favoritesDescription.val().trim()
-  };
-
-  if (!(favorites.text && favorites.description)) {
-    alert("You must enter an favorites text and description!");
-    return;
-  }
-
-  API.savefavorites(favorites).then(function() {
-    refreshFavorites();
-  });
-
-  $favoritesText.val("");
-  $favoritesDescription.val("");
-};
-
-// handleDeleteBtnClick is called when an favorites's delete button is clicked
-// Remove the favorites from the db and refresh the list
-var handleDeleteBtnClick = function() {
-  var idToDelete = $(this)
-    .parent()
-    .attr("data-id");
-
-  API.deletefavorites(idToDelete).then(function() {
-    refreshFavorites();
-  });
-};
-
-// Add event listeners to the submit and delete buttons
-$submitBtn.on("click", handleFormSubmit);
-$favoritesList.on("click", ".delete", handleDeleteBtnClick);
-
-// END OF BOILER PLATE
 $(document).ready(function() {
   var respData;
   const appendToTable = url => {
@@ -151,12 +75,10 @@ $(document).ready(function() {
     });
     if ($(this).data("toggle") === false) {
       $(this).attr("class", "ui teal button favorite");
-      console.log("Toggled true");
       API.saveFavorites(postData);
       $(this).data("toggle", true);
     } else {
       $(this).attr("class", "ui teal basic button favorite");
-      console.log("Toggled False");
       API.deleteFavorites(postData);
       $(this).data("toggle", false);
     }
@@ -264,3 +186,80 @@ $(document).ready(function() {
     $("#showMore").hide();
   });
 });
+
+// Get references to page elements
+// var $favoritesText = $("#favorites-text");
+// var $favoritesDescription = $("#favorites-description");
+// var $submitBtn = $("#submit");
+
+// var $favoritesList = $("#favorites-list");
+
+// The API object contains methods for each kind of request we'll make
+
+// refreshfavoritess gets new favoritess from the db and repopulates the list
+// var refreshFavorites = function() {
+//   API.getFavorites().then(function(data) {
+//     var $favorites = data.map(function() {
+//       var $a = $("<a>")
+//         .text(Favorites.text)
+//         .attr("href", "/favorites/" + Favorites.id);
+
+//       var $li = $("<li>")
+//         .attr({
+//           class: "list-group-item",
+//           "data-id": Favorites.id
+//         })
+//         .append($a);
+
+//       var $button = $("<button>")
+//         .addClass("btn btn-danger float-right delete")
+//         .text("ｘ");
+
+//       $li.append($button);
+
+//       return $li;
+//     });
+
+//     $favoritesList.empty();
+//     $favoritesList.append($favorites);
+//   });
+// };
+
+// handleFormSubmit is called whenever we submit a new favorites
+// Save the new favorites to the db and refresh the list
+// var handleFormSubmit = function(event) {
+//   event.preventDefault();
+
+//   var favorites = {
+//     text: $favoritesText.val().trim(),
+//     description: $favoritesDescription.val().trim()
+//   };
+
+//   if (!(favorites.text && favorites.description)) {
+//     alert("You must enter an favorites text and description!");
+//     return;
+//   }
+
+//   API.savefavorites(favorites).then(function() {
+//     refreshFavorites();
+//   });
+
+//   $favoritesText.val("");
+//   $favoritesDescription.val("");
+// };
+
+// handleDeleteBtnClick is called when an favorites's delete button is clicked
+// Remove the favorites from the db and refresh the list
+// var handleDeleteBtnClick = function() {
+//   var idToDelete = $(this)
+//     .parent()
+//     .attr("data-id");
+
+//   API.deletefavorites(idToDelete).then(function() {
+//     refreshFavorites();
+//   });
+// };
+
+// Add event listeners to the submit and delete buttons
+// $submitBtn.on("click", handleFormSubmit);
+// $favoritesList.on("click", ".delete", handleDeleteBtnClick);
