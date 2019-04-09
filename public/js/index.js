@@ -208,7 +208,7 @@ $(document).ready(function() {
 
   $("#showMore").on("click", () => {
     offset += 10;
-    url = url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}`;
+    url = url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}&tz=${tz}`;
     $("#loader").show();
     appendToTable(url);
     $("#showMore").hide();
