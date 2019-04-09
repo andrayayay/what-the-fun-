@@ -75,8 +75,8 @@ $(document).ready(function() {
         </td>
         <td>${el.title}</td>
         <td>${el.date}</td>
-        <td><a href="https://www.google.com/maps/place/?q=place_id:${
-          el.place_id
+        <td><a href="https://www.google.com/maps/place/?q=address:${
+          el.strAddr
         }" target="_blank">${el.strAddr}</a></td>
         <td>${el.start_time}</td>
       </tr>`);
