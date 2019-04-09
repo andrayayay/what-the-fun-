@@ -199,19 +199,24 @@ $(document).ready(function() {
         unit = "km";
       }
       url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&offset=${offset}&tzOffset=${tzOffset}`;
-      appendToTable(url);
       $("#showMore").show();
+      appendToTable(url);
     }
   });
 
   $("#reset").on("click", () => $("#range").range("set value", 20));
 
   $("#showMore").on("click", () => {
-    offset += 10;
-    url = url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}&tzOffset=${tzOffset}`;
-    $("#loader").show();
-    appendToTable(url);
-    $("#showMore").hide();
+    if (respData.length < 10) {
+      alert("No more results found!");
+      $("#showMore").hide();
+    } else {
+      offset += 10;
+      url = url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}&tzOffset=${tzOffset}`;
+      $("#loader").show();
+      appendToTable(url);
+      $("#showMore").hide();
+    }
   });
 
   setTimeout(() => {
