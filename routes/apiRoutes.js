@@ -1,16 +1,16 @@
 var db = require("../models");
 var moment = require("moment");
 
-module.exports = function (app) {
+module.exports = function(app) {
   // Get all examples
-  
-  app.get("/api/favorites", function (req, res) {
-    db.Favorites.findAll().then(function (results) {
+
+  app.get("/api/favorites", function(req, res) {
+    db.Favorites.findAll().then(function(results) {
       res.json(results);
     });
   });
 
-  app.get("/api/favorites/:userID", function (req, res) {
+  app.get("/api/favorites/:userID", function(req, res) {
     var userID = req.params.userID;
     // console.log("id", userID);
     db.Favorites.findAll({
@@ -20,15 +20,21 @@ module.exports = function (app) {
     }).then(function(favs) {
       var favsArr = [];
       favs.forEach(el => {
-        // console.log("API request", el.dataValues);
-        favsArr.push(el);
+        el.dataValues.eventDate = moment(
+          el.dataValues.eventDate,
+          moment.ISO_8601
+        ).format("LL");
+        el.dataValues.startTime = moment(el.dataValues.startTime, [
+          "HH:mm"
+        ]).format("h:mm a");
+        favsArr.push(el.dataValues);
       });
       res.json(favsArr);
     });
   });
 
   // Create a new example
-  app.post("/api/create", function (req, res) {
+  app.post("/api/create", function(req, res) {
     // console.log("This is req.body on apiRoutes.js: ", req.body);
     db.Favorites.create({
       title: req.body.title,
@@ -40,7 +46,7 @@ module.exports = function (app) {
       startTime: moment(req.body.start).format("HH:mm:ss"),
       timeZone: req.body.timezone,
       eventID: req.body.id
-    }).then(function (favs) {
+    }).then(function(favs) {
       // console.log("This is the result: ", favs);
       res.json(favs);
       // console.log(req.body);
@@ -48,23 +54,21 @@ module.exports = function (app) {
   });
 
   // Delete an example by id
-  app.delete("/api/delete/:userID&:eventID", function (req, res) {
+  app.delete("/api/delete/:userID&:eventID", function(req, res) {
     // console.log("*********************************** THIS IS WORKING");
-    
+
     var userID = req.params.userID;
     var eventID = req.params.eventID;
-    
 
     db.Favorites.destroy({
       where: {
         userID: userID,
         eventID: eventID
       }
-    }).then(function (results) {
+    }).then(function(results) {
       res.json(results);
       // console.log(userID);
       // console.log(eventID);
     });
   });
-
 };

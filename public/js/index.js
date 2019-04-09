@@ -20,6 +20,7 @@ $(document).ready(function() {
         url: `/api/favorites/${userID}`,
         type: "GET"
       }).done(function(data) {
+        $("#favsloader").hide();
         data.forEach(el => {
           $("#favoriteBody").append(`
           <tr>
