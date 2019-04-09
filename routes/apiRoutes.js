@@ -4,11 +4,18 @@ var moment = require("moment");
 module.exports = function(app) {
   // Get all examples
   app.get("/api/favorites/:userID", function(req, res) {
-    // var userID = req.params.id;
-    // console.log("id", userID);
-    db.Favorites.findAll({}).then(function(favs) {
-      res.json(favs);
-      // console.log(res.body);
+    var userID = req.params.userID;
+    db.Favorites.findAll({
+      where: {
+        userID: userID
+      }
+    }).then(function(favs) {
+      var favsArr = [];
+      favs.forEach(el => {
+        // console.log("API request", el.dataValues);
+        favsArr.push(el);
+      });
+      res.json(favsArr);
     });
   });
 

@@ -3,7 +3,44 @@
         <h1>{{title}}</h1>
     </div>
     <div class="ui segment">
-        <p>Another segment!</p>
-        <p>{{examples}}</p>
+        <p>{{msg}}</p>
+        <div class="ui grid" id="main-content">
+            <table class="ui compact celled definition teal table">
+                <thead class="full-width">
+                    <tr>
+                        <th>Event</th>
+                        <th>Event Date</th>
+                        <th>Address</th>
+                        <th>Start Time</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="favoriteBody">
+                    <div class="ui active inverted dimmer" id="loader">
+                        <div class="ui text loader">Loading</div>
+                    </div>
+                    <p></p>
+                </tbody>
+                <tfoot class="full-width">
+                    <tr>
+                        <th>
+                        </th>
+                        <th> <a href="https://predicthq.com/" target="_blank" class="ui tiny center aligned label"
+                                id="attribution">
+                                <img src="https://developer.predicthq.com/favicon.ico">
+                                Powered by PredictHQ
+                            </a></th>
+                        <th colspan="1">
+                        </th>
+                        <th>
+                            <div class="ui small teal labeled icon button">
+                                <i class="user icon"></i> Share Events
+                            </div>
+                        </th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
 </div>
