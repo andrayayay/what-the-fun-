@@ -50,7 +50,6 @@ module.exports = function(app) {
         latitude,
         longitude,
         moment(new Date(req.query.date)).format("YYYY-MM-DD"),
-        req.query.tz,
         req.query.q,
         req.query.category,
         req.query.offset,

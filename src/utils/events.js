@@ -3,17 +3,7 @@ const axios = require("axios");
 const moment = require("moment");
 const config = require("./config");
 
-async function events(
-  lat,
-  lon,
-  date,
-  tz,
-  keyword,
-  cat,
-  offset,
-  range,
-  callback
-) {
+async function events(lat, lon, date, keyword, cat, offset, range, callback) {
   const AuthStr = "Bearer ".concat(config.AUTH.id);
   const url = `https://api.predicthq.com/v1/events/`;
   var callbackData = [];
@@ -26,7 +16,7 @@ async function events(
       offset: offset,
       within: `${range}@${lat},${lon}`,
       "start.gte": moment(date)
-        .tz(tz)
+        .tz(moment.tz.guess(true))
         .toISOString(),
       "start.lte": moment(date)
         .add(1, "d")
