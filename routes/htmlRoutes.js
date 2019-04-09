@@ -7,7 +7,6 @@ const moment = require("moment");
 module.exports = function(app) {
   // Load index page
   app.get("/favorites", function(req, res) {
-    // console.log("/favorites", req);
     db.Favorites.findAll({}).then(function() {
       res.render("favorites", {
         title: "Favorites",
@@ -29,7 +28,6 @@ module.exports = function(app) {
 
   app.post("/api/create", (req, res) => {
     res.render(req.body[1]);
-    // console.log("This is req.body on htmlRoutes.js: " + req.body[1].category);
   });
 
   app.get("/", (req, res) => {
@@ -69,10 +67,6 @@ module.exports = function(app) {
       );
     });
   });
-
-  // app.post("/api/examples", (req, res) => {
-  //   // console.log(res);
-  // });
 
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {

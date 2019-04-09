@@ -15,15 +15,14 @@ async function events(lat, lon, date, keyword, cat, offset, range, callback) {
       category: cat,
       offset: offset,
       within: `${range}@${lat},${lon}`,
-      "start.gte": moment(date)
-        .tz(moment.tz.guess(true))
-        .toISOString(),
+      "start.gte": moment(date).toISOString(),
       "start.lte": moment(date)
         .add(1, "d")
         .toISOString(),
       sort: "local_rank"
     }
   });
+  // console.log("start.gte", moment(date).toISOString());
   callbackData = response.data.results;
   if (callbackData.length === 0) {
     var msg = "No results found!";

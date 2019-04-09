@@ -12,7 +12,6 @@ module.exports = function(app) {
 
   app.get("/api/favorites/:userID", function(req, res) {
     var userID = req.params.userID;
-    // console.log("id", userID);
     db.Favorites.findAll({
       where: {
         userID: userID
@@ -35,7 +34,6 @@ module.exports = function(app) {
 
   // Create a new example
   app.post("/api/create", function(req, res) {
-    // console.log("This is req.body on apiRoutes.js: ", req.body);
     db.Favorites.create({
       title: req.body.title,
       eventDate: req.body.date,
@@ -47,16 +45,12 @@ module.exports = function(app) {
       timeZone: req.body.timezone,
       eventID: req.body.id
     }).then(function(favs) {
-      // console.log("This is the result: ", favs);
       res.json(favs);
-      // console.log(req.body);
     });
   });
 
   // Delete an example by id
   app.delete("/api/delete/:userID&:eventID", function(req, res) {
-    // console.log("*********************************** THIS IS WORKING");
-
     var userID = req.params.userID;
     var eventID = req.params.eventID;
 
@@ -67,8 +61,6 @@ module.exports = function(app) {
       }
     }).then(function(results) {
       res.json(results);
-      // console.log(userID);
-      // console.log(eventID);
     });
   });
 };
