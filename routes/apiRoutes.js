@@ -13,7 +13,7 @@ module.exports = function(app) {
   });
 
   // Create a new example
-  app.post("/api/create", function(req, res) {
+  app.post("/api/create", function(req) {
     // console.log("This is req.body on apiRoutes.js: ", req.body);
     db.Favorites.create({
       title: req.body.title,
