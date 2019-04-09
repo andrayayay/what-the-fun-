@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
       eventDate: DataTypes.DATE,
       address: DataTypes.STRING,
       placeId: DataTypes.STRING,
-      startTime: DataTypes.TIME,
+      startTime: DataTypes.STRING,
       timeZone: DataTypes.STRING,
       eventID: DataTypes.STRING
     },

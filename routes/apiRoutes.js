@@ -1,10 +1,18 @@
 var db = require("../models");
 var moment = require("moment");
 
-module.exports = function(app) {
+module.exports = function (app) {
   // Get all examples
-  app.get("/api/favorites/:userID", function(req, res) {
+  
+  app.get("/api/favorites", function (req, res) {
+    db.Favorites.findAll().then(function (results) {
+      res.json(results);
+    });
+  });
+
+  app.get("/api/favorites/:userID", function (req, res) {
     var userID = req.params.userID;
+    // console.log("id", userID);
     db.Favorites.findAll({
       where: {
         userID: userID
@@ -20,7 +28,7 @@ module.exports = function(app) {
   });
 
   // Create a new example
-  app.post("/api/create", function(req, res) {
+  app.post("/api/create", function (req, res) {
     // console.log("This is req.body on apiRoutes.js: ", req.body);
     db.Favorites.create({
       title: req.body.title,
@@ -32,7 +40,7 @@ module.exports = function(app) {
       startTime: moment(req.body.start).format("HH:mm:ss"),
       timeZone: req.body.timezone,
       eventID: req.body.id
-    }).then(function(favs) {
+    }).then(function (favs) {
       // console.log("This is the result: ", favs);
       res.json(favs);
       // console.log(req.body);
@@ -40,9 +48,23 @@ module.exports = function(app) {
   });
 
   // Delete an example by id
-  app.delete("/api/examples/", function(req, res) {
-    db.Favorites.destroy({ where: { id: req.params.id } }).then(function(favs) {
-      res.json(favs);
+  app.delete("/api/delete/:userID&:eventID", function (req, res) {
+    // console.log("*********************************** THIS IS WORKING");
+    
+    var userID = req.params.userID;
+    var eventID = req.params.eventID;
+    
+
+    db.Favorites.destroy({
+      where: {
+        userID: userID,
+        eventID: eventID
+      }
+    }).then(function (results) {
+      res.json(results);
+      // console.log(userID);
+      // console.log(eventID);
     });
   });
+
 };

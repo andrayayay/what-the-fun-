@@ -1,9 +1,9 @@
 /*global FB*/
 /*global postData*/
 
-$(document).ready(function() {
+$(document).ready(function () {
   var API = {
-    saveFavorites: function(favs) {
+    saveFavorites: function (favs) {
       return $.ajax({
         headers: {
           "Content-Type": "application/json"
@@ -14,6 +14,7 @@ $(document).ready(function() {
         data: JSON.stringify(favs)
       });
     },
+
     getFavorites: function(userID) {
       return $.ajax({
         url: `/api/favorites/${userID}`,
@@ -37,9 +38,9 @@ $(document).ready(function() {
         });
       });
     },
-    deleteFavorites: function(id) {
+    deleteFavorites: function (userID, eventID) {
       return $.ajax({
-        url: "api/favorites/" + id,
+        url: `/api/delete/${userID}&${eventID}`,
         type: "DELETE"
       });
     }
@@ -67,15 +68,15 @@ $(document).ready(function() {
         <td class="collapsing">
           <div class="ui teal basic button favorite" data-id=${
             el.id
-          } data-toggle=false>
+            } data-toggle=false>
             <i class="star icon" style="margin:auto"></i> 
           </div>
         </td>
         <td>${el.title}</td>
         <td>${el.date}</td>
         <td><a href="https://www.google.com/maps/place/?q=place_id:${
-          el.place_id
-        }" target="_blank">${el.strAddr}</a></td>
+            el.place_id
+            }" target="_blank">${el.strAddr}</a></td>
         <td>${el.start_time}</td>
       </tr>`);
         });
@@ -83,7 +84,7 @@ $(document).ready(function() {
     });
   };
 
-  $(document).on("click", ".favorite", function() {
+  $(document).on("click", ".favorite", function () {
     let event_id = $(this).data("id");
     respData.forEach(el => {
       if (el.id === event_id) {
@@ -101,6 +102,11 @@ $(document).ready(function() {
     }
   });
 
+  $(document).on("click", ".red.button", function () {
+    let event_id = $(this).data("id");
+    API.deleteFavorites(postData.userID, event_id);
+  });
+
   // Initializing the Semantic UI Dropdown
   $(".ui.dropdown").dropdown();
   $("#loader").hide();
@@ -115,7 +121,7 @@ $(document).ready(function() {
   $("#calendar").calendar({ type: "date" });
 
   $("#facebook-button").on("click", function fb_login() {
-    FB.login(function() {}, { scope: "email,public_profile" });
+    FB.login(function () { }, { scope: "email,public_profile" });
   });
 
   $("#miles").on("click", () => {
@@ -204,9 +210,8 @@ $(document).ready(function() {
   });
 
   setTimeout(() => {
-    API.getFavorites(postData.userID);
-    // console.log(postData.userID);
-  }, 1000);
+    console.log(postData.userID);
+  }, 3000);
 });
 
 // Get references to page elements
