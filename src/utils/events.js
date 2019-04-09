@@ -3,8 +3,19 @@ const axios = require("axios");
 const moment = require("moment");
 const config = require("./config");
 
-async function events(lat, lon, date, keyword, cat, offset, range, callback) {
+async function events(
+  lat,
+  lon,
+  date,
+  tz,
+  keyword,
+  cat,
+  offset,
+  range,
+  callback
+) {
   const AuthStr = "Bearer ".concat(config.AUTH.id);
+  console.log("events date", date);
   const url = `https://api.predicthq.com/v1/events/`;
   var callbackData = [];
 
@@ -15,7 +26,9 @@ async function events(lat, lon, date, keyword, cat, offset, range, callback) {
       category: cat,
       offset: offset,
       within: `${range}@${lat},${lon}`,
-      "start.gte": moment(date).toISOString(),
+      "start.gte": moment(date)
+        .tz(tz)
+        .toISOString(),
       "start.lte": moment(date)
         .add(1, "d")
         .toISOString(),
@@ -33,6 +46,7 @@ async function events(lat, lon, date, keyword, cat, offset, range, callback) {
     };
     callback(undefined, callbackData);
   } else {
+    console.log("tz", tz);
     reverseGeolocate(callbackData).then(() => {
       setTimeout(() => {
         callback(undefined, callbackData);
@@ -59,8 +73,6 @@ async function reverseGeolocate(array) {
           }
           el.place_id = response.data.results[ind].place_id;
           el.strAddr = response.data.results[ind].formatted_address;
-          el.date = moment(el.start).format("LL");
-          el.start_time = moment(el.start).format("LT");
         } else throw new Error(response.status);
       });
   });

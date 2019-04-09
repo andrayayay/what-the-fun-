@@ -146,6 +146,7 @@ $(document).ready(function() {
   var location = "";
   var category = "";
   var unit = "mi";
+  var tz = /\((.*)\)/.exec(new Date().toString())[1];
 
   if (window.location.href.includes("favorites")) {
     $("#favoritesPage").attr("class", "item active");
@@ -197,7 +198,7 @@ $(document).ready(function() {
       if ($("#miles").attr("class") === "ui transparent label") {
         unit = "km";
       }
-      url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}`;
+      url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&offset=${offset}&tz=${tz}`;
       appendToTable(url);
       $("#showMore").show();
     }

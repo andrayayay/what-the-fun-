@@ -50,12 +50,22 @@ module.exports = function(app) {
         latitude,
         longitude,
         moment(new Date(req.query.date)).format("YYYY-MM-DD"),
+        req.query.tz,
         req.query.q,
         req.query.category,
         req.query.offset,
         req.query.range,
         (error, data) => {
           if (error) return res.send({ error });
+          data.forEach(el => {
+            el.start_time = moment(el.start, moment.ISO_8601)
+              .tz(el.timezone)
+              .format("h:mm a z");
+            el.date = moment(el.start)
+              .tz(el.timezone)
+              .format("LL");
+          });
+          console.log("htmlRoutes Data", data);
           res.send(data);
         }
       );
