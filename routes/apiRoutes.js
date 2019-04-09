@@ -1,26 +1,69 @@
 var db = require("../models");
+var moment = require("moment");
 
-module.exports = function(app) {
+module.exports = function (app) {
   // Get all examples
-  app.get("/api/examples", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.json(dbExamples);
+  app.get("/api/favorites", function (req, res) {
+    db.Favorites.findAll().then(function (results) {
+      res.json(results);
+    });
+  });
+
+  app.get("/api/favorites/:userID", function (req, res) {
+    var userID = req.params.userID;
+    console.log("id", userID);
+    db.Favorites.findAll({
+      where: {
+        userID: userID
+      }
+    }).then(function (favs) {
+      favsArr = [];
+      res.json(favs);
+      favs.forEach(el => [
+        favsArr.push(el)
+      ])
+      // console.log(res.body);
     });
   });
 
   // Create a new example
-  app.post("/api/examples", function(req, res) {
-    db.Example.create(req.body).then(function(dbExample) {
-      res.json(dbExample);
+  app.post("/api/create", function (req, res) {
+    // console.log("This is req.body on apiRoutes.js: ", req.body);
+    db.Favorites.create({
+      title: req.body.title,
+      eventDate: req.body.date,
+      address: req.body.strAddr,
+      username: req.body.username,
+      userID: req.body.userID,
+      placeId: req.body.place_id,
+      startTime: moment(req.body.start).format("HH:mm:ss"),
+      timeZone: req.body.timezone,
+      eventID: req.body.id
+    }).then(function (favs) {
+      // console.log("This is the result: ", favs);
+      res.json(favs);
+      // console.log(req.body);
     });
   });
 
   // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(
-      dbExample
-    ) {
-      res.json(dbExample);
+  app.delete("/api/delete/:userID&:eventID", function (req, res) {
+    console.log("*********************************** THIS IS WORKING");
+    
+    var userID = req.params.userID;
+    var eventID = req.params.eventID;
+    
+
+    db.Favorites.destroy({
+      where: {
+        userID: userID,
+        eventID: eventID
+      }
+    }).then(function (results) {
+      res.json(results);
+      console.log(userID);
+      console.log(eventID);
     });
   });
+
 };

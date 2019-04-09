@@ -15,7 +15,11 @@ async function events(lat, lon, date, keyword, cat, offset, range, callback) {
       category: cat,
       offset: offset,
       within: `${range}@${lat},${lon}`,
-      "start_around.origin": date
+      "start.gte": date,
+      "start.lte": moment(date)
+        .add(1, "d")
+        .toISOString(),
+      sort: "local_rank"
     }
   });
   callbackData = response.data.results;
@@ -56,7 +60,7 @@ async function reverseGeolocate(array) {
           el.place_id = response.data.results[ind].place_id;
           el.strAddr = response.data.results[ind].formatted_address;
           el.date = moment(el.start).format("LL");
-          el.start = moment(el.start).format("LT");
+          el.start_time = moment(el.start).format("LT");
         } else throw new Error(response.status);
       });
   });

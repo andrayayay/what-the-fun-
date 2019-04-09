@@ -1,12 +1,11 @@
+// Dependencies
 require("dotenv").config();
 var express = require("express");
-var exphbs = require("express-handlebars");
-const geocode = require("./src/utils/geocode");
-const events = require("./src/utils/events");
-const moment = require("moment");
-
 var db = require("./models");
+var exphbs = require("express-handlebars");
 
+
+//Express app setup
 var app = express();
 var PORT = process.env.PORT || 3000;
 
@@ -14,59 +13,6 @@ var PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
-
-// Handlebars
-app.engine(
-  "handlebars",
-  exphbs({
-    defaultLayout: "main"
-  })
-);
-app.set("view engine", "handlebars");
-
-app.get("", (req, res) => {
-  res.render("index", {
-    title: "What the Fun?!"
-  });
-});
-
-app.get("/favorites", (req, res) => {
-  res.render("favorites", {
-    title: "Favorites"
-  });
-});
-
-app.get("/friends", (req, res) => {
-  res.render("friends", {
-    title: "Friends"
-  });
-});
-
-app.get("/events", (req, res) => {
-  geocode.geocode(req.query.address, (error, { latitude, longitude }) => {
-    events(
-      latitude,
-      longitude,
-      moment(new Date(req.query.date)).format("YYYY-MM-DD"),
-      req.query.q,
-      req.query.category,
-      req.query.offset,
-      req.query.range,
-      (error, data) => {
-        if (error) return res.send({ error });
-        res.send(data);
-      }
-    );
-  });
-});
-
-// app.post("/api/create", (req,res)=>{
-//   console.log("This is req.body on server.js: ", req.body);
-// }).then(function(dbFavorites) {
-//   console.log("**************************              This is the result: ");
-//   //res.json(dbFavorites);
-
-// });
 
 // Routes
 require("./routes/apiRoutes")(app);
@@ -90,5 +36,14 @@ db.sequelize.sync(syncOptions).then(function() {
     // );
   });
 });
+
+// Handlebars
+app.engine(
+  "handlebars",
+  exphbs({
+    defaultLayout: "main"
+  })
+);
+app.set("view engine", "handlebars");
 
 module.exports = app;
