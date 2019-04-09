@@ -3,10 +3,23 @@ const axios = require("axios");
 const moment = require("moment");
 const config = require("./config");
 
-async function events(lat, lon, date, keyword, cat, offset, range, callback) {
+async function events(
+  lat,
+  lon,
+  date,
+  tzOffset,
+  keyword,
+  cat,
+  offset,
+  range,
+  callback
+) {
   const AuthStr = "Bearer ".concat(config.AUTH.id);
   const url = `https://api.predicthq.com/v1/events/`;
   var callbackData = [];
+  var start_gte = moment(date)
+    .add(tzOffset, "m")
+    .toISOString();
 
   const response = await axios.get(url, {
     headers: { Authorization: AuthStr },
@@ -15,14 +28,14 @@ async function events(lat, lon, date, keyword, cat, offset, range, callback) {
       category: cat,
       offset: offset,
       within: `${range}@${lat},${lon}`,
-      "start.gte": moment(date).toISOString(),
-      "start.lte": moment(date)
+      "start.gte": start_gte,
+      "start.lte": moment(start_gte)
         .add(1, "d")
         .toISOString(),
       sort: "local_rank"
     }
   });
-  // console.log("start.gte", moment(date).toISOString());
+  console.log("start.gte", start_gte);
   callbackData = response.data.results;
   if (callbackData.length === 0) {
     var msg = "No results found!";

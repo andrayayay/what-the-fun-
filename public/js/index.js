@@ -146,6 +146,7 @@ $(document).ready(function() {
   var location = "";
   var category = "";
   var unit = "mi";
+  var tzOffset = new Date().getTimezoneOffset();
 
   if (window.location.href.includes("favorites")) {
     $("#favoritesPage").attr("class", "item active");
@@ -197,7 +198,7 @@ $(document).ready(function() {
       if ($("#miles").attr("class") === "ui transparent label") {
         unit = "km";
       }
-      url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&offset=${offset}`;
+      url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&offset=${offset}&tzOffset=${tzOffset}`;
       appendToTable(url);
       $("#showMore").show();
     }
@@ -207,7 +208,7 @@ $(document).ready(function() {
 
   $("#showMore").on("click", () => {
     offset += 10;
-    url = url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}`;
+    url = url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}&tzOffset=${tzOffset}`;
     $("#loader").show();
     appendToTable(url);
     $("#showMore").hide();

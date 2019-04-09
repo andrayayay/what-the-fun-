@@ -48,6 +48,7 @@ module.exports = function(app) {
         latitude,
         longitude,
         moment(new Date(req.query.date)).format("YYYY-MM-DD"),
+        req.query.tzOffset,
         req.query.q,
         req.query.category,
         req.query.offset,
