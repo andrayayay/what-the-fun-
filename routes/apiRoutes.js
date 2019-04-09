@@ -11,13 +11,13 @@ module.exports = function (app) {
 
   app.get("/api/favorites/:userID", function (req, res) {
     var userID = req.params.userID;
-    console.log("id", userID);
+    // console.log("id", userID);
     db.Favorites.findAll({
       where: {
         userID: userID
       }
     }).then(function (favs) {
-      favsArr = [];
+      var favsArr = [];
       res.json(favs);
       favs.forEach(el => [
         favsArr.push(el)
@@ -48,7 +48,7 @@ module.exports = function (app) {
 
   // Delete an example by id
   app.delete("/api/delete/:userID&:eventID", function (req, res) {
-    console.log("*********************************** THIS IS WORKING");
+    // console.log("*********************************** THIS IS WORKING");
     
     var userID = req.params.userID;
     var eventID = req.params.eventID;
@@ -61,8 +61,8 @@ module.exports = function (app) {
       }
     }).then(function (results) {
       res.json(results);
-      console.log(userID);
-      console.log(eventID);
+      // console.log(userID);
+      // console.log(eventID);
     });
   });
 
