@@ -1,8 +1,11 @@
 var db = require("../models");
+var moment = require("moment");
 
 module.exports = function(app) {
   // Get all examples
-  app.get("/api/favorites", function(req, res) {
+  app.get("/api/favorites/:userID", function(req, res) {
+    // var userID = req.params.id;
+    // console.log("id", userID);
     db.Favorites.findAll({}).then(function(favs) {
       res.json(favs);
       // console.log(res.body);
@@ -10,30 +13,28 @@ module.exports = function(app) {
   });
 
   // Create a new example
-  app.post("/api/create", function(req) {
+  app.post("/api/create", function(req, res) {
     // console.log("This is req.body on apiRoutes.js: ", req.body);
     db.Favorites.create({
-      userId: req.body[0].authResponse.userID,
-      username: req.body[0].authResponse.name,
-      title: req.body[1].title,
-      eventDate: req.body[1].date,
-      address: req.body[1].strAddr,
-      placeId: req.body[1].place_id,
-      startTime: req.body[1].start,
-      timeZone: req.body[1].timezone,
-      eventID: req.body[1].id
-    }).then(function() {
-      // console.log("**************************              This is the result: ");
-      //res.json(dbFavorites);
-
+      title: req.body.title,
+      eventDate: req.body.date,
+      address: req.body.strAddr,
+      username: req.body.username,
+      userID: req.body.userID,
+      placeId: req.body.place_id,
+      startTime: moment(req.body.start).format("HH:mm:ss"),
+      timeZone: req.body.timezone,
+      eventID: req.body.id
+    }).then(function(favs) {
+      // console.log("This is the result: ", favs);
+      res.json(favs);
+      // console.log(req.body);
     });
   });
 
   // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.Favorites.destroy({ where: { id: req.params.id } }).then(function(
-      favs
-    ) {
+  app.delete("/api/examples/", function(req, res) {
+    db.Favorites.destroy({ where: { id: req.params.id } }).then(function(favs) {
       res.json(favs);
     });
   });
