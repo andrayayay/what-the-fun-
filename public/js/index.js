@@ -14,11 +14,28 @@ $(document).ready(function () {
         data: JSON.stringify(favs)
       });
     },
-    getFavorites: function (userID) {
-      // console.log("sending request");
+
+    getFavorites: function(userID) {
       return $.ajax({
         url: `/api/favorites/${userID}`,
         type: "GET"
+      }).done(function(data) {
+        data.forEach(el => {
+          $("#favoriteBody").append(`
+          <tr>
+          <td>${el.title}</td>
+          <td>${el.eventDate}</td>
+          <td><a href="https://www.google.com/maps/place/?q=place_id:${
+            el.placeId
+          }" target="_blank">${el.address}</a></td>
+          <td>${el.startTime}</td>
+          <td>
+            <div class="ui red button" data-id=${el.eventID}>
+              <i class="ban icon" style="margin:auto"></i>
+            </div>
+          </td>
+        </tr>`);
+        });
       });
     },
     deleteFavorites: function (userID, eventID) {
@@ -194,7 +211,6 @@ $(document).ready(function () {
 
   setTimeout(() => {
     console.log(postData.userID);
-
   }, 3000);
 });
 

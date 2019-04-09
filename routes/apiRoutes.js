@@ -3,6 +3,7 @@ var moment = require("moment");
 
 module.exports = function (app) {
   // Get all examples
+  
   app.get("/api/favorites", function (req, res) {
     db.Favorites.findAll().then(function (results) {
       res.json(results);
@@ -16,13 +17,13 @@ module.exports = function (app) {
       where: {
         userID: userID
       }
-    }).then(function (favs) {
+    }).then(function(favs) {
       var favsArr = [];
-      res.json(favs);
-      favs.forEach(el => [
-        favsArr.push(el)
-      ])
-      // console.log(res.body);
+      favs.forEach(el => {
+        // console.log("API request", el.dataValues);
+        favsArr.push(el);
+      });
+      res.json(favsArr);
     });
   });
 
