@@ -8,10 +8,10 @@ module.exports = function(app) {
   // Load index page
   app.get("/favorites", function(req, res) {
     // console.log("/favorites", req);
-    db.Favorites.findAll({}).then(function(favs) {
+    db.Favorites.findAll({}).then(function() {
       res.render("favorites", {
-        msg: "These are your favorite events!",
-        examples: JSON.stringify(favs)
+        title: "Favorites",
+        msg: "These are your favorite events!"
       });
     });
   });
