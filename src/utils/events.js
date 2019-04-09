@@ -15,7 +15,7 @@ async function events(lat, lon, date, keyword, cat, offset, range, callback) {
       category: cat,
       offset: offset,
       within: `${range}@${lat},${lon}`,
-      "start.gte": date,
+      "start.gte": moment(date).toISOString(),
       "start.lte": moment(date)
         .add(1, "d")
         .toISOString(),
