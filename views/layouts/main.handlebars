@@ -106,7 +106,9 @@
       });
 
     }
-
+    var d = new Date();
+    var n = d.getTimezoneOffset();
+    document.getElementById("offset").innerHTML = n;
     checkLoginState()
   </script>
 
@@ -139,7 +141,7 @@
               Favorites
             </a>
             <a href="/friends" class="item" id="friendsPage">
-              <i class="users icon"></i>
+              <i class="users icon" id="offset"></i>
               Friends
             </a>
           </div>
