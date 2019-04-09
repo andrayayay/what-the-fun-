@@ -15,7 +15,6 @@ async function events(
   callback
 ) {
   const AuthStr = "Bearer ".concat(config.AUTH.id);
-  console.log("events date", date);
   const url = `https://api.predicthq.com/v1/events/`;
   var callbackData = [];
 
@@ -46,7 +45,6 @@ async function events(
     };
     callback(undefined, callbackData);
   } else {
-    console.log("tz", tz);
     reverseGeolocate(callbackData).then(() => {
       setTimeout(() => {
         callback(undefined, callbackData);

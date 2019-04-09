@@ -65,7 +65,6 @@ module.exports = function(app) {
               .tz(el.timezone)
               .format("LL");
           });
-          console.log("htmlRoutes Data", data);
           res.send(data);
         }
       );
