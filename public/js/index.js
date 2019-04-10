@@ -1,9 +1,9 @@
 /*global FB*/
 /*global postData*/
 
-$(document).ready(function () {
+$(document).ready(function() {
   var API = {
-    saveFavorites: function (favs) {
+    saveFavorites: function(favs) {
       return $.ajax({
         headers: {
           "Content-Type": "application/json"
@@ -20,6 +20,7 @@ $(document).ready(function () {
         url: `/api/favorites/${userID}`,
         type: "GET"
       }).done(function(data) {
+        $("#favsloader").hide();
         data.forEach(el => {
           $("#favoriteBody").append(`
           <tr>
@@ -38,7 +39,7 @@ $(document).ready(function () {
         });
       });
     },
-    deleteFavorites: function (userID, eventID) {
+    deleteFavorites: function(userID, eventID) {
       return $.ajax({
         url: `/api/delete/${userID}&${eventID}`,
         type: "DELETE"
@@ -49,6 +50,7 @@ $(document).ready(function () {
   var respData;
   const appendToTable = url => {
     fetch(url).then(response => {
+      console.log(response);
       response.json().then(data => {
         if (respData === undefined) respData = data;
         else {
@@ -68,15 +70,15 @@ $(document).ready(function () {
         <td class="collapsing">
           <div class="ui teal basic button favorite" data-id=${
             el.id
-            } data-toggle=false>
+          } data-toggle=false>
             <i class="star icon" style="margin:auto"></i> 
           </div>
         </td>
         <td>${el.title}</td>
         <td>${el.date}</td>
-        <td><a href="https://www.google.com/maps/place/?q=place_id:${
-            el.place_id
-            }" target="_blank">${el.strAddr}</a></td>
+        <td><a href="https://maps.google.com/maps?daddr=${
+          el.strAddr
+        }" target="_blank">${el.strAddr}</a></td>
         <td>${el.start_time}</td>
       </tr>`);
         });
@@ -84,27 +86,36 @@ $(document).ready(function () {
     });
   };
 
-  $(document).on("click", ".favorite", function () {
+  $(document).on("click", ".favorite", function() {
     let event_id = $(this).data("id");
-    respData.forEach(el => {
-      if (el.id === event_id) {
-        $.extend(postData, el);
-      }
-    });
-    if ($(this).data("toggle") === false) {
-      $(this).attr("class", "ui teal button favorite");
-      API.saveFavorites(postData);
-      $(this).data("toggle", true);
+    if (event_id === "undefined") {
+      $(this).hide();
     } else {
-      $(this).attr("class", "ui teal basic button favorite");
-      API.deleteFavorites(postData);
-      $(this).data("toggle", false);
+      respData.forEach(el => {
+        if (el.id === event_id) {
+          $.extend(postData, el);
+        }
+      });
+      if ($(this).data("toggle") === false) {
+        $(this).attr("class", "ui teal button favorite");
+        API.saveFavorites(postData);
+        $(this).data("toggle", true);
+      } else {
+        $(this).attr("class", "ui teal basic button favorite");
+        API.deleteFavorites(postData.userID, event_id);
+        $(this).data("toggle", false);
+      }
     }
   });
 
-  $(document).on("click", ".red.button", function () {
+  $(document).on("click", ".red.button", function() {
     let event_id = $(this).data("id");
     API.deleteFavorites(postData.userID, event_id);
+    $(this)
+      .closest("tr")
+      .fadeOut(300, function() {
+        $(this).remove();
+      });
   });
 
   // Initializing the Semantic UI Dropdown
@@ -121,7 +132,7 @@ $(document).ready(function () {
   $("#calendar").calendar({ type: "date" });
 
   $("#facebook-button").on("click", function fb_login() {
-    FB.login(function () { }, { scope: "email,public_profile" });
+    FB.login(function() {}, { scope: "email,public_profile" });
   });
 
   $("#miles").on("click", () => {
@@ -142,6 +153,7 @@ $(document).ready(function () {
   var location = "";
   var category = "";
   var unit = "mi";
+  var tzOffset = new Date().getTimezoneOffset();
 
   if (window.location.href.includes("favorites")) {
     $("#favoritesPage").attr("class", "item active");
@@ -181,6 +193,14 @@ $(document).ready(function () {
       $("#loader").show();
       if ($("#calendar-input").val() === "") {
         date = new Date($.now());
+      } else if (
+        new Date($("#calendar-input").val()) >
+        new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      ) {
+        alert(
+          "Due to API restrictions, dates set more than 30 days from today are not supported"
+        );
+        date = "";
       } else {
         date = new Date($("#calendar-input").val());
       }
@@ -193,25 +213,30 @@ $(document).ready(function () {
       if ($("#miles").attr("class") === "ui transparent label") {
         unit = "km";
       }
-      url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}`;
-      appendToTable(url);
+      url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&offset=${offset}&tzOffset=${tzOffset}`;
       $("#showMore").show();
+      appendToTable(url);
     }
   });
 
   $("#reset").on("click", () => $("#range").range("set value", 20));
 
   $("#showMore").on("click", () => {
-    offset += 10;
-    url = url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}`;
-    $("#loader").show();
-    appendToTable(url);
-    $("#showMore").hide();
+    if (respData.length < 10) {
+      alert("No more results found!");
+      $("#showMore").hide();
+    } else {
+      offset += 10;
+      url = url = `/events?q=${keyword}&date=${date}&address=${location}&category=${category}&range=${range}${unit}&limit=10&offset=${offset}&tzOffset=${tzOffset}`;
+      $("#loader").show();
+      appendToTable(url);
+      $("#showMore").hide();
+    }
   });
 
   setTimeout(() => {
-    console.log(postData.userID);
-  }, 3000);
+    API.getFavorites(postData.userID);
+  }, 2000);
 });
 
 // Get references to page elements
