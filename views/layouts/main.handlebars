@@ -115,14 +115,17 @@
       <div class="ui segment">
         <div class="ui grid">
           <div class="sixteen column row">
-            <div class="right floated eight wide column" id="facebook-display">
+            <div class="fourteen wide center aligned column">
+              <h1>What the Fun?!</h1>
+            </div>
+            <div class="right floated two wide column" id="facebook-display">
               <div id="status">
               </div>
               <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" style="margin:auto">
               </fb:login-button>
 
               {{!-- Google Sign in --}}
-              <div class="ui contianer g-signin2" id="google" data-onsuccess="onSignIn" data-theme="dark"></div>
+              {{!-- <div class="ui contianer g-signin2" id="google" data-onsuccess="onSignIn" data-theme="dark"></div> --}}
             </div>
           </div>
         </div>
