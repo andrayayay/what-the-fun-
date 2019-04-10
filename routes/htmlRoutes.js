@@ -44,28 +44,35 @@ module.exports = function(app) {
 
   app.get("/events", (req, res) => {
     geocode.geocode(req.query.address, (error, { latitude, longitude }) => {
-      events(
-        latitude,
-        longitude,
-        moment(new Date(req.query.date)).format("YYYY-MM-DD"),
-        req.query.tzOffset,
-        req.query.q,
-        req.query.category,
-        req.query.offset,
-        req.query.range,
-        (error, data) => {
-          if (error) return res.send({ error });
-          data.forEach(el => {
-            el.start_time = moment(el.start, moment.ISO_8601)
-              .tz(el.timezone)
-              .format("h:mm a z");
-            el.date = moment(el.start)
-              .tz(el.timezone)
-              .format("LL");
-          });
-          res.send(data);
-        }
-      );
+      if (error) return res.send({ error });
+      else {
+        events(
+          latitude,
+          longitude,
+          moment(new Date(req.query.date)).format("YYYY-MM-DD"),
+          req.query.tzOffset,
+          req.query.q,
+          req.query.category,
+          req.query.offset,
+          req.query.range,
+          (error, data) => {
+            if (error) return res.send({ error });
+            else if (data[0].title === "No results found!") {
+              res.send(data);
+            } else {
+              data.forEach(el => {
+                el.start_time = moment(el.start, moment.ISO_8601)
+                  .tz(el.timezone)
+                  .format("h:mm a z");
+                el.date = moment(el.start)
+                  .tz(el.timezone)
+                  .format("LL");
+              });
+              res.send(data);
+            }
+          }
+        );
+      }
     });
   });
 

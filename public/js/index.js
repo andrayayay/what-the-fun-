@@ -50,6 +50,7 @@ $(document).ready(function() {
   var respData;
   const appendToTable = url => {
     fetch(url).then(response => {
+      console.log(response);
       response.json().then(data => {
         if (respData === undefined) respData = data;
         else {
@@ -87,19 +88,23 @@ $(document).ready(function() {
 
   $(document).on("click", ".favorite", function() {
     let event_id = $(this).data("id");
-    respData.forEach(el => {
-      if (el.id === event_id) {
-        $.extend(postData, el);
-      }
-    });
-    if ($(this).data("toggle") === false) {
-      $(this).attr("class", "ui teal button favorite");
-      API.saveFavorites(postData);
-      $(this).data("toggle", true);
+    if (event_id === "undefined") {
+      $(this).hide();
     } else {
-      $(this).attr("class", "ui teal basic button favorite");
-      API.deleteFavorites(postData.userID, event_id);
-      $(this).data("toggle", false);
+      respData.forEach(el => {
+        if (el.id === event_id) {
+          $.extend(postData, el);
+        }
+      });
+      if ($(this).data("toggle") === false) {
+        $(this).attr("class", "ui teal button favorite");
+        API.saveFavorites(postData);
+        $(this).data("toggle", true);
+      } else {
+        $(this).attr("class", "ui teal basic button favorite");
+        API.deleteFavorites(postData.userID, event_id);
+        $(this).data("toggle", false);
+      }
     }
   });
 
@@ -188,6 +193,14 @@ $(document).ready(function() {
       $("#loader").show();
       if ($("#calendar-input").val() === "") {
         date = new Date($.now());
+      } else if (
+        new Date($("#calendar-input").val()) >
+        new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      ) {
+        alert(
+          "Due to API restrictions, dates set more than 30 days from today are not supported"
+        );
+        date = "";
       } else {
         date = new Date($("#calendar-input").val());
       }

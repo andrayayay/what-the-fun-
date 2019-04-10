@@ -47,11 +47,6 @@ module.exports = function(app) {
       timeZone: req.body.timezone,
       eventID: req.body.id
     }).then(function(favs) {
-      console.log(
-        moment(req.body.start, moment.ISO_8601)
-          .tz(req.body.timezone)
-          .format("HH:mm:ss")
-      );
       res.json(favs);
     });
   });
