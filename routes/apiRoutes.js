@@ -41,10 +41,17 @@ module.exports = function(app) {
       username: req.body.username,
       userID: req.body.userID,
       placeId: req.body.place_id,
-      startTime: moment(req.body.start).format("HH:mm:ss"),
+      startTime: moment(req.body.start, moment.ISO_8601)
+        .tz(req.body.timezone)
+        .format("HH:mm:ss"),
       timeZone: req.body.timezone,
       eventID: req.body.id
     }).then(function(favs) {
+      console.log(
+        moment(req.body.start, moment.ISO_8601)
+          .tz(req.body.timezone)
+          .format("HH:mm:ss")
+      );
       res.json(favs);
     });
   });
