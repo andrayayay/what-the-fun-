@@ -108,7 +108,9 @@ $(document).ready(function() {
     API.deleteFavorites(postData.userID, event_id);
     $(this)
       .closest("tr")
-      .remove();
+      .fadeOut(300, function() {
+        $(this).remove();
+      });
   });
 
   // Initializing the Semantic UI Dropdown
