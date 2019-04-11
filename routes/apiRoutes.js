@@ -12,8 +12,11 @@ module.exports = function(app) {
     });
   });
 
-  app.get("/api/friends", function(req, res) {
-    db.Favorites.findAll().then(function(results) {
+  app.get("/api/friends/:userID", function(req, res) {
+    let userID = req.params.userID;
+    db.Favorites.findAll({
+      WHERE: {}
+    }).then(function(results) {
       var names = _.uniq(_.map(results, "username"));
       var nameResp = [];
       names.forEach(el => {

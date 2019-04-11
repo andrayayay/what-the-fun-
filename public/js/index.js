@@ -45,9 +45,9 @@ $(document).ready(function() {
         type: "DELETE"
       });
     },
-    getFriends: function() {
+    getFriends: function(userID) {
       return $.ajax({
-        url: `/api/friends/`,
+        url: `/api/friends/${userID}`,
         type: "GET"
       }).done(function(data) {
         $("#friendsSegment").fadeIn(1000);
@@ -262,7 +262,7 @@ $(document).ready(function() {
   }, 2000);
 
   setTimeout(() => {
-    API.getFriends();
+    API.getFriends(postData.userID);
   }, 2000);
 });
 
