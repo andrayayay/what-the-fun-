@@ -1,20 +1,24 @@
 <div class="ui container">
-    <div class="ui segment" id="home">
+    <div class="ui segment" id="friends">
         <h1>{{title}}</h1>
     </div>
-    <div class="ui segment">
-        <div class="data-tables">
-            <table id="dataTable" class="text-center" >
-                <thead class="bg-light text-capitalize">
+
+    <div class="ui segment" id="friends-loader">
+        <div class="ui grid" id="main-content">
+            <table class="ui compact celled definition teal table">
+                <thead class="full-width">
                     <tr>
-                        <th>userID</th>
-                        <th>Email</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Events?</th>
+                        <th>Profile Picture</th>
+                        <th>Username</th>
+                        <th>Favorite Events</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody"></tbody>
+                <tbody id="favoriteBody">
+                    <div class="ui active inverted dimmer" id="favsloader">
+                        <div class="ui text loader">Loading</div>
+                    </div>
+                    <p></p>
+                </tbody>
             </table>
         </div>
     </div>
