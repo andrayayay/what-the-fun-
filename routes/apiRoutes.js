@@ -1,5 +1,7 @@
 var db = require("../models");
 var moment = require("moment");
+var _ = require("lodash");
+var faker = require("faker");
 
 module.exports = function(app) {
   // Get all examples
@@ -7,6 +9,23 @@ module.exports = function(app) {
   app.get("/api/favorites", function(req, res) {
     db.Favorites.findAll().then(function(results) {
       res.json(results);
+    });
+  });
+
+  app.get("/api/friends", function(req, res) {
+    db.Favorites.findAll().then(function(results) {
+      var names = _.uniq(_.map(results, "username"));
+      var nameResp = [];
+      names.forEach(el => {
+        if (el) {
+          let user = {
+            name: el,
+            pic: faker.internet.avatar()
+          };
+          nameResp.push(user);
+        }
+      });
+      res.json(nameResp);
     });
   });
 

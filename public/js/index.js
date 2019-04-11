@@ -44,6 +44,29 @@ $(document).ready(function() {
         url: `/api/delete/${userID}&${eventID}`,
         type: "DELETE"
       });
+    },
+    getFriends: function() {
+      return $.ajax({
+        url: `/api/friends/`,
+        type: "GET"
+      }).done(function(data) {
+        $("#friendsSegment").fadeIn(1000);
+        data.forEach(el => {
+          if (el) {
+            $("#friends").append(`
+            <div class="column">
+            <div class="ui fluid card">
+              <div class="image">
+                <img src="${el.pic}">
+              </div>
+              <div class="content">
+                <a class="header">${el.name}</a>
+              </div>
+            </div>
+          </div>`);
+          }
+        });
+      });
     }
   };
 
@@ -236,6 +259,10 @@ $(document).ready(function() {
 
   setTimeout(() => {
     API.getFavorites(postData.userID);
+  }, 2000);
+
+  setTimeout(() => {
+    API.getFriends();
   }, 2000);
 });
 
