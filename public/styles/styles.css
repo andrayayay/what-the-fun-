@@ -2,6 +2,15 @@
   line-height: 2.5;
 }
 
+.item.active,
+.teal.button.favorite {
+  background-color: #eea31e !important;
+}
+
+.teal.basic.button.favorite {
+  border-color: #eea31e;
+}
+
 body {
   margin: auto;
   padding: auto;
@@ -45,6 +54,16 @@ body {
   margin-top: 8px;
 }
 
+.ui.segment,
+td.collapsing {
+  background-color: #585858 !important;
+}
+
+.ui.sub.header,
+#rangeInput {
+  color: white;
+}
+
 #miles:hover,
 #kilometers:hover,
 #reset:hover,
@@ -54,4 +73,25 @@ body {
 
 #reset:active {
   background-color: teal;
+}
+
+h1 {
+  font-family: "Shrikhand", cursive;
+  color: #eea31e;
+  text-shadow: #008080 2px 2px;
+  font-size: 2.5rem;
+}
+
+.ui.transparent.label {
+  background-color: #00b5ad;
+  color: white;
+}
+
+.ui.inverted.teal.menu .active.item,
+.ui.teal.label {
+  background-color: #eea31e !important;
+}
+
+#resultsDisplay {
+  margin-bottom: 8px;
 }

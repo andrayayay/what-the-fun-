@@ -44,6 +44,29 @@ $(document).ready(function() {
         url: `/api/delete/${userID}&${eventID}`,
         type: "DELETE"
       });
+    },
+    getFriends: function(userID) {
+      return $.ajax({
+        url: `/api/friends/${userID}`,
+        type: "GET"
+      }).done(function(data) {
+        $("#friendsSegment").fadeIn(1000);
+        data.forEach(el => {
+          if (el) {
+            $("#friends").append(`
+            <div class="column">
+            <div class="ui fluid card">
+              <div class="image">
+                <img src="${el.pic}">
+              </div>
+              <div class="content">
+                <a class="header">${el.name}</a>
+              </div>
+            </div>
+          </div>`);
+          }
+        });
+      });
     }
   };
 
@@ -68,7 +91,7 @@ $(document).ready(function() {
           $("#tableBody").append(`
         <tr>
         <td class="collapsing">
-          <div class="ui teal basic button favorite" data-id=${
+          <div class="ui yellow basic button favorite" data-id=${
             el.id
           } data-toggle=false>
             <i class="star icon" style="margin:auto"></i> 
@@ -101,7 +124,7 @@ $(document).ready(function() {
         API.saveFavorites(postData);
         $(this).data("toggle", true);
       } else {
-        $(this).attr("class", "ui teal basic button favorite");
+        $(this).attr("class", "ui yellow basic button favorite");
         API.deleteFavorites(postData.userID, event_id);
         $(this).data("toggle", false);
       }
@@ -236,6 +259,10 @@ $(document).ready(function() {
 
   setTimeout(() => {
     API.getFavorites(postData.userID);
+  }, 2000);
+
+  setTimeout(() => {
+    API.getFriends(postData.userID);
   }, 2000);
 });
 

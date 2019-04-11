@@ -8,6 +8,7 @@
   <link
     href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.css"
     rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css?family=Shrikhand" rel="stylesheet">
   <link rel="stylesheet" href="/styles/range.css" media="screen" title="no title" charset="utf-8">
   <link rel="stylesheet" href="/styles/styles.css" media="screen" title="no title" charset="utf-8">
   <link rel="icon" href="/img/W.png">
@@ -101,6 +102,7 @@
       FB.api('/me', function (response) {
         //console.log(response);
         document.getElementById('status').innerHTML = response.name;
+        console.log("FB response", response)
         postData.username = response.name;
         postData.userID = response.id;
       });
@@ -114,13 +116,16 @@
 
   <header>
     <div class="ui container" id="home">
-      <div class="ui segment">
+      <div class="ui segment" id="headerBox">
         <div class="ui grid">
           <div class="sixteen column row">
-            <div class="fourteen wide center aligned column">
+            <div class="three wide center middle aligned fluid column">
+              <img src="/img/Wtransparent.png">
+            </div>
+            <div class="ten wide fluid center aligned column" style="margin:auto">
               <h1>What the Fun?!</h1>
             </div>
-            <div class="right floated two wide column" id="facebook-display">
+            <div class="right floated three wide column" id="facebook-display">
               <div id="status">
               </div>
               <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" style="margin:auto">
@@ -132,9 +137,9 @@
           </div>
         </div>
       </div>
-      <div class="ui segment">
+      <div class="ui segment" id="tabBox">
         <div class="ui grid" id="navbar">
-          <div class="ui teal three item labeled inverted menu">
+          <div class="ui teal two item labeled inverted menu">
             <a href="/" class="item" id="homePage">
               <i class="search icon"></i>
               Home
@@ -143,10 +148,10 @@
               <i class="star outline icon"></i>
               Favorites
             </a>
-            <a href="/friends" class="item" id="friendsPage">
+            {{!-- <a href="/friends" class="item" id="friendsPage">
               <i class="users icon"></i>
               Friends
-            </a>
+            </a> --}}
           </div>
         </div>
       </div>
