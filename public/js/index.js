@@ -91,7 +91,7 @@ $(document).ready(function() {
           $("#tableBody").append(`
         <tr>
         <td class="collapsing">
-          <div class="ui teal basic button favorite" data-id=${
+          <div class="ui yellow basic button favorite" data-id=${
             el.id
           } data-toggle=false>
             <i class="star icon" style="margin:auto"></i> 
@@ -124,7 +124,7 @@ $(document).ready(function() {
         API.saveFavorites(postData);
         $(this).data("toggle", true);
       } else {
-        $(this).attr("class", "ui teal basic button favorite");
+        $(this).attr("class", "ui yellow basic button favorite");
         API.deleteFavorites(postData.userID, event_id);
         $(this).data("toggle", false);
       }
