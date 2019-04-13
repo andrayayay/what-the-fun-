@@ -26,9 +26,9 @@ $(document).ready(function() {
           <tr>
           <td>${el.title}</td>
           <td>${el.eventDate}</td>
-          <td><a href="https://www.google.com/maps/place/?q=place_id:${
-            el.placeId
-          }" target="_blank">${el.address}</a></td>
+          <td><a href="https://maps.google.com/maps?daddr=${
+          el.strAddr
+        }" target="_blank">${el.address}</a></td>
           <td>${el.startTime}</td>
           <td>
             <div class="ui red button" data-id=${el.eventID}>
