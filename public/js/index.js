@@ -27,7 +27,7 @@ $(document).ready(function() {
           <td>${el.title}</td>
           <td>${el.eventDate}</td>
           <td><a href="https://maps.google.com/maps?daddr=${
-          el.strAddr
+          el.address
         }" target="_blank">${el.address}</a></td>
           <td>${el.startTime}</td>
           <td>
